@@ -10,7 +10,8 @@ class UserBalance(db.Model):
       'currencies.id'), nullable=False)
   quantity = db.Column(db.Integer, nullable=False)
   user = db.relationship('User', back_populates='userBalance')
-  
+  userCurrencies = db.relationship('Currency', back_populates='userBalance')
+
 
 
   def to_dict(self):

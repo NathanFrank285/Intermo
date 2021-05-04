@@ -6,7 +6,7 @@ class Currency(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   currencyPair = db.Column(db.String(15), nullable = False, unique = True)
-  user = db.relationship('User', back_populates='userCurrencies')
+  userBalance = db.relationship('UserBalance', back_populates='userCurrencies')
 
   def to_dict(self):
     return {

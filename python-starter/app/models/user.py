@@ -9,10 +9,12 @@ class User(db.Model, UserMixin):
   username = db.Column(db.String(40), nullable = False, unique = True)
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(255), nullable = False)
+
   userBalance = db.relationship('UserBalance', back_populates='user')
-  userCurrencies = db.relationship('Currencies', back_populates='user')
   userPosts = db.relationship('Post', back_populates='user')
-  userTrades = db.relationship('Trade', back_populates='user')
+  makerTrades = db.relationship('Trade', back_populates='maker', foreign_keys='Trade.makerId')
+  takerTrades = db.relationship(
+      'Trade', back_populates='taker', foreign_keys='Trade.takerId')
 
 
   @property

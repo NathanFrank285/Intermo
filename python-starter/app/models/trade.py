@@ -12,10 +12,10 @@ class Trade(db.Model):
   currencyId = db.Column(db.Integer, db.ForeignKey('currencies.id'), nullable=False)
   created_on = db.Column(db.DateTime,  default=db.func.current_timestamp(), nullable=False)
   #timestamps from Stackoverflow: https://stackoverflow.com/questions/12154129/how-can-i-automatically-populate-sqlalchemy-database-fields-flask-sqlalchemy
-  maker = db.relationship('User', backref='maker',
-                          foreign_keys="Trade.makerId")
-  taker = db.relationship('User', backref='taker',
-                          foreign_keys="Trade.takerId")
+  maker = db.relationship('User',
+                          foreign_keys=makerId)
+  taker = db.relationship('User',
+                          foreign_keys=takerId)
 
 
   def to_dict(self):
