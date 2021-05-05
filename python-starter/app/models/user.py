@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
 
   userBalance = db.relationship('UserBalance', back_populates='user')
   userPosts = db.relationship('Post', back_populates='user')
+  
   makerTrades = db.relationship('Trade', back_populates='maker', foreign_keys='Trade.makerId')
   takerTrades = db.relationship(
       'Trade', back_populates='taker', foreign_keys='Trade.takerId')
