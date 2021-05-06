@@ -10,6 +10,7 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.currency_routes import currencyRoutes
 from .api.post_routes import postRoutes
+from .api.trade_routes import tradeRoutes
 
 from .seeds import seed_commands
 
@@ -35,6 +36,7 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(currencyRoutes, url_prefix='/api/currency')
 app.register_blueprint(postRoutes, url_prefix='/api/post')
+app.register_blueprint(tradeRoutes, url_prefix='/api/trade')
 db.init_app(app)
 Migrate(app, db)
 

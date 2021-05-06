@@ -22,6 +22,10 @@ def getPosts():
 @postRoutes.route('/', methods=['POST'])
 @login_required
 def postPosts():
+  post = Post.query.filter(Post.userId == id).first()
+
+  db.session.add()
+  db.session.commit()
   # use the request object from flask to access the body of post request
 
   return

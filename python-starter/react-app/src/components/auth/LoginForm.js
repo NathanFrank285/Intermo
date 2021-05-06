@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import  { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { login } from "../../store/session";
+import './FormStyling.css'
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -31,34 +32,43 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error) => (
-          <div>{error}</div>
-        ))}
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          name="email"
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={updateEmail}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type="submit">Login</button>
-      </div>
-    </form>
+    <div className="container">
+      <form className="form-container" onSubmit={onLogin}>
+        <div >
+          <div>
+            {errors.map((error) => (
+              <div>{error}</div>
+            ))}
+          </div>
+          <div className="form-element">
+            <label htmlFor="email">Email</label>
+            <br></br>
+            <input
+              name="email"
+              type="text"
+              value={email}
+              onChange={updateEmail}
+              className="form-element"
+            />
+          </div>
+          <div className="form-element">
+            <label htmlFor="password">Password</label>
+            <br></br>
+            <input
+              name="password"
+              type="password"
+              value={password}
+              onChange={updatePassword}
+              className="form-element"
+            />
+            <br></br>
+            <button className="form-button" type="submit">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 
