@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {login} from '../store/session'
 import LogoutButton from './auth/LogoutButton';
 import logo from '../images/Intermo-logo.png'
 import './NavBar.css'
 
 const NavBar = () => {
-
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("demo@aa.io");
+  const [password, setPassword] = useState("password");
   const user = useSelector((state) => state?.session?.user)
+
+  const loginDemoUser = async () => {
+    return await dispatch(login(email, password));
+  };
+
 
   return (
     <div className="navbar-container">
@@ -27,6 +35,15 @@ const NavBar = () => {
             >
               Login
             </NavLink>
+          </div>
+          <div className="userForms userForms--login">
+            <div
+              activeClassName="active"
+              className="authBubble"
+              onClick={loginDemoUser}
+            >
+              Demo User
+            </div>
           </div>
           <div className="userForms">
             <NavLink

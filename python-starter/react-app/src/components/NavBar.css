@@ -22,25 +22,20 @@ height: auto;
   grid-area: forms;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 
 .userForms{
-  /* border: 1px solid #018ffe; */
-  padding: 10px;
-  margin: 3px;
-  /* border-radius: 20px;
-  color: blue;
-  background: #018ffe; */
-  /* min-width: 78.92px; */
+  padding: 3px;
+  margin: 1px;
 }
 
 .authBubble{
   text-decoration: none;
-  /* background-color: #018ffe; */
   color: #018ffe;
   font-weight: 800;
+  cursor: pointer;
 }
 .authBubble:active{
   color: black;

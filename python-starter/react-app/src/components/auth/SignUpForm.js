@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import "./FormStyling.css";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -39,10 +40,12 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
-      <div className="form-container">
-        <div>
+    <div className="container">
+
+      <form className="form-container" onSubmit={onSignUp}>
+        <div className="form-element">
           <label>User Name</label>
+          <br></br>
           <input
             type="text"
             name="username"
@@ -50,8 +53,9 @@ const SignUpForm = () => {
             value={username}
           ></input>
         </div>
-        <div>
+        <div className="form-element">
           <label>Email</label>
+          <br></br>
           <input
             type="text"
             name="email"
@@ -59,8 +63,9 @@ const SignUpForm = () => {
             value={email}
           ></input>
         </div>
-        <div>
+        <div className="form-element">
           <label>Password</label>
+          <br></br>
           <input
             type="password"
             name="password"
@@ -68,19 +73,20 @@ const SignUpForm = () => {
             value={password}
           ></input>
         </div>
-        <div>
-          <label>Repeat Password</label>
+        <div className="form-element">
+          <label>Confirm Password</label>
+          <br></br>
           <input
             type="password"
-            name="repeat_password"
+            name="confirm_password"
             onChange={updateRepeatPassword}
             value={repeatPassword}
             required={true}
           ></input>
         </div>
-        <button type="submit">Sign Up</button>
-      </div>
-    </form>
+        <button className="form-button" type="submit">Confirm</button>
+      </form>
+    </div>
   );
 };
 
