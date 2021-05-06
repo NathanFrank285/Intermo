@@ -20,5 +20,5 @@ class Currency(db.Model):
   def to_dict(self):
     return {
         "id": self.id,
-        "currencyPair": self.currencyPair
+        "name": self.name
     }

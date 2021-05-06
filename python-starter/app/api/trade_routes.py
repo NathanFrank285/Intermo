@@ -14,9 +14,11 @@ tradeRoutes = Blueprint('trade', __name__)
 def getTrades():
   id = current_user.id
   trades = Trade.query.filter(or_(Trade.takerId == id, Trade.makerId == id)).all()
+  output = {}
   for trade in trades:
     coin = Currency.query.filter(Currency.id == trade.makerCurrencyId).first()
-    print(coin.currencyPair)
-  print(trades)
+    output[f'{coin.name}'] = trade.to_dict()
+    # print("---------",coin.name)
+  print(output)
 
-  return "I am a new trade"
+  return output
