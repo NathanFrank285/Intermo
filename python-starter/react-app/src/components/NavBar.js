@@ -20,7 +20,7 @@ const NavBar = () => {
   return (
     <div className="navbar-container">
       <div className="logo">
-        <NavLink to="/" exact={true} activeClassName="active">
+        <NavLink to="/" exact={true} className="logo">
           <img className="logo--img" src={logo}></img>
         </NavLink>
       </div>
