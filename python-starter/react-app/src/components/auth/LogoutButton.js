@@ -9,9 +9,9 @@ const LogoutButton = () => {
   };
 
   return (
-    <button className="logoutButton" onClick={onLogout}>
+    <div className="logoutButton authBubble" onClick={onLogout}>
       Logout
-    </button>
+    </div>
   );
 };
 

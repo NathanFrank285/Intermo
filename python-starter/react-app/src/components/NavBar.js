@@ -23,7 +23,7 @@ const NavBar = () => {
               to="/login"
               exact={true}
               activeClassName="active"
-              className="authBubble authBubble--login"
+              className="authBubble"
             >
               Login
             </NavLink>
@@ -40,7 +40,7 @@ const NavBar = () => {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="forms">
           <LogoutButton />
         </div>
       )}

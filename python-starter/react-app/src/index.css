@@ -2,4 +2,9 @@
 @import-normalize;
 * {
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #f6f9fc;
+}
+
+body{
+  margin: 0px;
 }
