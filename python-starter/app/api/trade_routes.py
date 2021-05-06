@@ -15,7 +15,7 @@ def getTrades():
   id = current_user.id
   trades = Trade.query.filter(or_(Trade.takerId == id, Trade.makerId == id)).all()
   for trade in trades:
-    coin = Currency.query.filter(Currency.id == trade.currencyId).first()
+    coin = Currency.query.filter(Currency.id == trade.makerCurrencyId).first()
     print(coin.currencyPair)
   print(trades)
 

@@ -23,7 +23,6 @@ def getPosts():
 @login_required
 def postPosts():
   post = Post.query.filter(Post.userId == id).first()
-  print(post.currencyId)
 
   db.session.add()
   db.session.commit()

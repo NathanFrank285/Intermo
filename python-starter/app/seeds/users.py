@@ -19,24 +19,39 @@ def seed_currencies():
     currency2 = Currency(name="GBP")
     currency3 = Currency(name="EUR")
     currency4 = Currency(name="CAD")
-    db.session.add([currency1, currency2, currency3, currency4])
+    currency = [currency1, currency2, currency3, currency4]
+    db.session.add_all(currency)
     db.session.commit()
 
 def seed_posts():
-    post = Post(userId=1, currencyId=1, price=1.5)
+    post1 = Post(userId=1, postedCurrencyId=1, wantedCurrencyId=2, price=1.54325, bidOrOffer='offer', created_on="5/5/2021", quantity=25)
+    post2 = Post(userId=2, postedCurrencyId=1, wantedCurrencyId=3, price=1.67843, bidOrOffer='offer', created_on="5/4/2021", quantity=250)
+    post3 = Post(userId=1, postedCurrencyId=1, wantedCurrencyId=2, price=1.8843, bidOrOffer='offer', created_on="5/4/2021", quantity=250)
+    post4 = Post(userId=2, postedCurrencyId=3, wantedCurrencyId=2, price=1.67843, bidOrOffer='offer', created_on="5/4/2021", quantity=250)
+    post = [post1, post2, post3, post4]
+    db.session.add_all(post)
+    db.session.commit()
 
 
 def seed_trades():
-    trade1 = Trade(makerId=1, takerId=2, currencyId=1,
-                   quantity=10, bidOrOffer="bid", created_on="5/5/2021")
-    trade2 = Trade(makerId=2, takerId=1, currencyId=3,
-                   quantity=10, bidOrOffer="bid", created_on="5/5/2021")
-    trade3 = Trade(makerId=1, takerId=2, currencyId=4,
-                   quantity=20, bidOrOffer="offer", created_on="5/5/2021")
+    trade1 = Trade(makerId=1, takerId=2, makerCurrencyId=2, takerCurrencyId=1,
+                   quantity=190, bidOrOffer="bid", price=1.5764, created_on="5/5/2021")
+    trade2= Trade(makerId=2, takerId=1, makerCurrencyId=3, takerCurrencyId=1,
+                   quantity=120, bidOrOffer="bid", price=1.6864, created_on="5/5/2021")
+    trade3 = Trade(makerId=1, takerId=2, makerCurrencyId=2, takerCurrencyId=1,
+                   quantity=510, bidOrOffer="bid", price=1.6964, created_on="5/4/2021")
     trade = [trade1, trade2, trade3]
-    db.session.add(trade)
+    db.session.add_all(trade)
     db.session.commit()
 
+def seed_userBalance():
+    balance1 = UserBalance(userId=2, currencyId=1, quantity=10000)
+    balance2 = UserBalance(userId=2, currencyId=2, quantity=20000)
+    balance3 = UserBalance(userId=1, currencyId=1, quantity=10000)
+    balance4 = UserBalance(userId=1, currencyId=2, quantity=20000)
+    balance = [balance1, balance2, balance3, balance4]
+    db.session.add_all(balance)
+    db.session.commit()
 # Uses a raw SQL query to TRUNCATE the users table.
 # SQLAlchemy doesn't have a built in function to do this
 # TRUNCATE Removes all the data from the table, and resets
@@ -45,6 +60,15 @@ def undo_users():
     db.session.execute('TRUNCATE users RESTART IDENTITY CASCADE;')
     db.session.commit()
 
-# def undo_currencies():
-#     db.session.execute('TRUNCATE currencies RESTART IDENTITY CASCADE;')
-#     db.session.commit()
+def undo_currencies():
+    db.session.execute('TRUNCATE currencies RESTART IDENTITY CASCADE;')
+    db.session.commit()
+def undo_posts():
+    db.session.execute('TRUNCATE posts RESTART IDENTITY CASCADE;')
+    db.session.commit()
+def undo_trades():
+    db.session.execute('TRUNCATE trades RESTART IDENTITY CASCADE;')
+    db.session.commit()
+def undo_userBalance():
+    db.session.execute('TRUNCATE userBalances RESTART IDENTITY CASCADE;')
+    db.session.commit()

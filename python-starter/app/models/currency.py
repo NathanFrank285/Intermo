@@ -12,6 +12,10 @@ class Currency(db.Model):
       'Trade', back_populates='makerCurrency', foreign_keys='Trade.makerCurrencyId')
   takerCurrency = db.relationship(
       'Trade', back_populates='takerCurrency', foreign_keys='Trade.takerCurrencyId')
+  postedCurrency = db.relationship(
+      'Post', back_populates='postedCurrency', foreign_keys='Post.postedCurrencyId')
+  wantedCurrency = db.relationship(
+      'Post', back_populates='wantedCurrency', foreign_keys='Post.wantedCurrencyId')
 
   def to_dict(self):
     return {
