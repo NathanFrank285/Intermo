@@ -1,0 +1,54 @@
+.navbar-container{
+  height: 20%;
+  display: grid;
+  grid-template-columns: 15% auto 15%;
+  /* grid-template-rows: 10%; */
+  grid-template-areas:
+  "l . forms";
+}
+
+.logo--img{
+width: 100%;
+height: auto;
+
+
+
+}
+
+.logo{
+  grid-area: l;
+  /* justify-self: stretch; */
+}
+
+.forms{
+  grid-area: forms;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.userForms{
+  /* border: 1px solid #018ffe; */
+  padding: 10px;
+  margin: 3px;
+  /* border-radius: 20px;
+  color: blue;
+  background: #018ffe; */
+  /* min-width: 78.92px; */
+}
+
+.userForms--login{
+
+}
+
+.authBubble{
+  text-decoration: none;
+  /* background-color: #018ffe; */
+  color: #018ffe;
+  font-weight: 800;
+}
+
+.logoutButton{
+
+}
