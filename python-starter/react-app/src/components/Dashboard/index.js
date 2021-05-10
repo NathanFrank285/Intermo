@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {getPostsThunk} from '../../store/posts'
+import { getCurrenciesThunk } from '../../store/pairs';
 import HistoricalTrades from '../HistoricalTrades'
 import PortfolioGraph from '../PortfolioGraph'
 import "./Dashboard.css";
@@ -8,66 +11,66 @@ import "./Dashboard.css";
 // todo
 function Dashboard() {
   const dispatch = useDispatch()
+  const history = useHistory()
   const user = useSelector(state => state?.session?.user)
-  const [baseSearchValue, setBaseSearchValue] = useState('')
-  const [quoteSearchValue, setQuoteSearchValue] = useState('')
+  const pairs = useSelector(state => state?.pairs[0])
+  const [base, setBaseSearchValue] = useState(1)
+  const [quote, setQuoteSearchValue] = useState('')
   const [quantity, setQuantity] = useState('')
+  const [direction, setDirection] = useState('bid')
 
-  const findPosts = (direction) => {
-    console.log(baseSearchValue, quoteSearchValue, quantity, direction)
+  useEffect(() => {
+    dispatch(getCurrenciesThunk())
+  },[])
+
+  const findPosts = () => {
+    console.log(base, quantity, direction)
     const searchData = {
-      baseSearchValue,
-      quoteSearchValue,
+      base,
       quantity,
       direction
     }
-    // dispatch(getPostsThunk(searchData))
+    dispatch(getPostsThunk(searchData))
+    history.push("/posts");
   }
-  function setSell() {
-    setDirection('sell')
-    findPosts()
+  if (pairs) {
+    console.log("---------", pairs)
   }
-
   return (
     <div>
       <h2>Welcome, what would you like to convert today?</h2>
       <div className="dashboard-container">
-        <div className="searchBar">
-          <label>What Currency would you like to convert?</label>
-          <input
-            type="search"
-            value={baseSearchValue}
-            onChange={(e) => setBaseSearchValue(e.target.value)}
-          ></input>
-          <br></br>
-          <label>What Currency would you like in return?</label>
-          <input
-            type="search"
-            value={quoteSearchValue}
-            onChange={(e) => setQuoteSearchValue(e.target.value)}
-          ></input>
-          <br></br>
-          <label>How much do you want to convert?</label>
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          ></input>
-          <div className="buySellButtonContainer">
-            <div
-              className="button buyButton"
-              onClick={()=>findPosts('buy')}
-              >
-              Buy
-            </div>
-            <div
-              className="button sellButton"
-              onClick={()=>findPosts('sell')}
+        <form onSubmit={findPosts}>
+          <div className="searchBar">
+            <label>What pair would you like to convert?</label>
+            <select
+              required
+              onChange={(e) => setBaseSearchValue(e.target.value)}
             >
-              Sell
+              {pairs &&
+                pairs.map((pair) => (
+                  <option key={pair["id"]} value={pair["id"]}>
+                    {pair['name']}
+                  </option>
+                ))}
+            </select>
+            <br></br>
+            <label>How much do you want to convert?</label>
+            <input
+              required
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            ></input>
+            <div className="buySellButtonContainer">
+              <select onChange={(e) => setDirection(e.target.value)}>
+                <option value="bid">Buy</option>
+                <option value="offer">Sell</option>
+              </select>
             </div>
+            <button type="submit">Search</button>
           </div>
-        </div>
+        </form>
         <div className="historicalTrades">
           <HistoricalTrades />
         </div>

@@ -20,3 +20,18 @@ def getCurrency(base, quote):
   # baseRates = c.get_rates(f'{base}')
   # quoteRates = c.get_rates(f'{quote}')
   return f'{output}'
+
+@currencyRoutes.route('')
+@login_required
+def getCurrencies():
+  id = current_user.id
+
+
+  output = Currency.query.all()
+  pairs = []
+  for pair in output:
+    pairs.append(pair.to_dict())
+
+  # baseRates = c.get_rates(f'{base}')
+  # quoteRates = c.get_rates(f'{quote}')
+  return {'pairs': pairs}

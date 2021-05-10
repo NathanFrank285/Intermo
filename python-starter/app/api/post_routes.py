@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from flask_login import current_user, login_required
 from app.models import db, Currency, Post
 from sqlalchemy import and_
@@ -9,14 +9,24 @@ c = CurrencyRates()
 
 postRoutes = Blueprint('post', __name__)
 
-@postRoutes.route('/')
+@postRoutes.route('/<base>/<quantity>/<direction>')
 @login_required
-def getPosts():
+def getPosts(base, quantity, direction):
   id = current_user.id
-  posts = Post.query.filter(Post.userId == id).all()
-  posts = [post.to_dict() for post in posts]
-  print(posts)
-  return f'{posts}'
+  # pairId = Currency.query.filter(Currency.id == base).first().to_dict()
+
+
+  posts = Post.query.filter(and_(Post.postedCurrencyId == base), Post.bidOrOffer != direction).all()
+
+
+  output = {}
+  count = 0
+  for post in posts:
+    output[count]= post.to_dict()
+    count = count + 1
+  output['search'] = [base, quantity, direction]
+  print("---------------OUTPUT",output)
+  return output
 
 
 @postRoutes.route('/', methods=['POST'])
