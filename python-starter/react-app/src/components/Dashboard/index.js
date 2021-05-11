@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import {getPostsThunk} from '../../store/posts'
 import { getCurrenciesThunk } from '../../store/pairs';
 import HistoricalTrades from '../HistoricalTrades'
@@ -24,7 +24,6 @@ function Dashboard() {
   },[])
 
   const findPosts = () => {
-    console.log(base, quantity, direction)
     const searchData = {
       base,
       quantity,
@@ -32,9 +31,6 @@ function Dashboard() {
     }
     dispatch(getPostsThunk(searchData))
     history.push("/posts");
-  }
-  if (pairs) {
-    console.log("---------", pairs)
   }
   return (
     <div>
@@ -71,12 +67,19 @@ function Dashboard() {
             <button type="submit">Search</button>
           </div>
         </form>
+
+        {user ?
+        <>
         <div className="historicalTrades">
           <HistoricalTrades />
         </div>
         <div className="portfolioAllocation">
           <PortfolioGraph />
-        </div>
+        </div> </> :
+        <div className="historicalTrades">
+          <NavLink to="/login">Please login to view past trades and current balance</NavLink>
+        </div>}
+
       </div>
     </div>
   );

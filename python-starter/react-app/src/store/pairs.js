@@ -11,7 +11,6 @@ const getCurrencies = (currencies) => {
 
 
 export const getCurrenciesThunk = () => async (dispatch) => {
-  console.log("I got called-----------------");
   const data = await fetch(`/api/currency`);
   const response = await data.json();
   dispatch(getCurrencies(Object.values(response)));

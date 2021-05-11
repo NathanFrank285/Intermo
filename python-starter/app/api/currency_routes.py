@@ -22,10 +22,7 @@ def getCurrency(base, quote):
   return f'{output}'
 
 @currencyRoutes.route('')
-@login_required
 def getCurrencies():
-  id = current_user.id
-
 
   output = Currency.query.all()
   pairs = []

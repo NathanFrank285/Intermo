@@ -47,9 +47,9 @@ function App() {
         <Route path="/" exact={true}>
           <Dashboard />
         </Route>
-        <Route path="/posts" exact={true}>
-          <Posts/>
-        </Route>
+        <ProtectedRoute path="/posts" exact={true}>
+          <Posts />
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );

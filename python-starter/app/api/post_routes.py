@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_login import current_user, login_required
-from app.models import db, Currency, Post
+from app.models import db, Currency, Post, User
 from sqlalchemy import and_
 from forex_python.converter import CurrencyRates
 
@@ -16,16 +16,18 @@ def getPosts(base, quantity, direction):
   # pairId = Currency.query.filter(Currency.id == base).first().to_dict()
 
 
-  posts = Post.query.filter(and_(Post.postedCurrencyId == base), Post.bidOrOffer != direction).all()
-
+  posts = Post.query.filter(and_(Post.postedCurrencyId == base), Post.bidOrOffer != direction).join(User).all()
+  # todo the user object is being added to the posts variable, need to find a way to add this to the dict function so it can be sent to redux
+  # for post in posts:
+  #   print("------------------",post.user)
 
   output = {}
   count = 0
   for post in posts:
     output[count]= post.to_dict()
     count = count + 1
-  output['search'] = [base, quantity, direction]
-  print("---------------OUTPUT",output)
+  # output['search'] = [base, quantity, direction]
+
   return output
 
 
