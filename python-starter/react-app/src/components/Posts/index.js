@@ -12,7 +12,7 @@ function Posts() {
     numberOfPosts = Object.entries(posts).length
     posts = Object.entries(posts)
   }
-  console.log(posts);
+
 // bidOrOffer: "offer";
 // created_on: "Wed, 05 May 2021 00:00:00 GMT";
 // id: 1;
@@ -23,20 +23,28 @@ function Posts() {
 // userId: 1;
 // wantedCurrencyId: 2;
 //todo create a seperate store for search data so this can be accessed
-    return(
-    <div className="postsContainer">
-      {(numberOfPosts > 0)
-        ? posts.map((post)=>(
-          <div className="singlePost">
-            <div>{post[1].created_on}</div>
-
-          </div>
-        ))
-        : <div>False</div>}
-    </div>
-    )
-
-  ;
+    return (
+      <div>
+        <div className="currentRate">
+          <h2>I am the current exchange rate Div</h2>
+        </div>
+        <div className="postContainer">
+          {numberOfPosts > 0 ? (
+            posts.map((post, id) => (
+              <div key={id} className="singlePost">
+                <div className="postElement">Posted on {post[1].created_on}</div>
+                <div className="postElement">{post[1].price}</div>
+                <div className="postElement">{post[1].quantity}</div>
+                <div className="postElement">{post[1].bidOrOffer}</div>
+                <button className="postElement">Trade</button>
+              </div>
+            ))
+          ) : (
+            <div>False</div>
+          )}
+        </div>
+      </div>
+    );
 }
 
 export default Posts;

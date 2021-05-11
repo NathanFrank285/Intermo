@@ -71,6 +71,7 @@ function Dashboard() {
         {user ?
         <>
         <div className="historicalTrades">
+          
           <HistoricalTrades />
         </div>
         <div className="portfolioAllocation">

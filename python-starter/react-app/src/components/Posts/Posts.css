@@ -1,7 +1,22 @@
-.postsContainer{
-
+.postContainer{
+display: flex;
+justify-content: flex-end;
+flex-direction: column;
+/* justify-content: space-around; */
 }
 
 .singlePost{
+
   
+  width: 100%;
+  margin: 10px;
+}
+
+.postsList{
+
+}
+
+.postElement{
+  display: flex;
+justify-content: flex-end;
 }

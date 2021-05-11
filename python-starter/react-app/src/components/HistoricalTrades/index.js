@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTradesThunk } from "../../store/trades";
+import './HistoricalTrades.css'
 
 function HistoricalTrades() {
   const dispatch = useDispatch();
@@ -35,23 +36,23 @@ function HistoricalTrades() {
   })
 
   return (
-    <table>
-      <tbody>
-      <tr>
-        <th>Date</th>
-        <th>Side</th>
-        <th>Currencies</th>
-        <th>Quantity</th>
-        <th>Price</th>
-      </tr>
-      {trades && Object.keys(trades).length > 1 ?
-      rows :
-      'No trade data available'
-    }
-
-      </tbody>
-
-    </table>
+    <>
+      <h2 className="tradeHistory">Trade history</h2>
+      <table>
+        <tbody>
+          <tr>
+            <th>Date</th>
+            <th>Side</th>
+            <th>Currencies</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+          {trades && Object.keys(trades).length > 1
+            ? rows
+            : "No trade data available"}
+        </tbody>
+      </table>
+    </>
   );
 
 }
