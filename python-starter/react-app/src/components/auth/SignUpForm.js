@@ -41,8 +41,10 @@ const SignUpForm = () => {
 
   return (
     <div className="container">
-
       <form className="form-container" onSubmit={onSignUp}>
+        <div className="form-element">
+          <h3>Create your account!</h3>
+        </div>
         <div className="form-element">
           <label>User Name</label>
           <br></br>
@@ -84,7 +86,9 @@ const SignUpForm = () => {
             required={true}
           ></input>
         </div>
-        <button className="form-button" type="submit">Confirm</button>
+        <button className="form-button" type="submit">
+          Confirm
+        </button>
       </form>
     </div>
   );

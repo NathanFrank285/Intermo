@@ -1,0 +1,49 @@
+.dashboard-container{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 80%;
+  grid-template-areas:
+  'searchBar .'
+  'trades portfolio'
+  ;
+}
+
+.searchBar{
+  grid-area: searchBar;
+  margin: 10px;
+  margin-bottom: 25px;
+  grid-column: 1/3;
+}
+
+.historicalTrades{
+  grid-area: trades;
+}
+
+.portfolioAllocation{
+  grid-area: portfolio;
+}
+
+.buySellButtonContainer{
+  display: flex;
+  flex-direction: row;
+}
+
+.button{
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.button:hover{
+  cursor: pointer;
+}
+
+.buyButton{
+  color: white;
+  background-color: green;
+}
+
+.sellButton{
+  color: white;
+  background-color: red;
+}

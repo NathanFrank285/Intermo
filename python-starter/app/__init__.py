@@ -11,6 +11,7 @@ from .api.auth_routes import auth_routes
 from .api.currency_routes import currencyRoutes
 from .api.post_routes import postRoutes
 from .api.trade_routes import tradeRoutes
+from .api.userBalance_routes import userBalanceRoutes
 
 from .seeds import seed_commands
 
@@ -37,6 +38,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(currencyRoutes, url_prefix='/api/currency')
 app.register_blueprint(postRoutes, url_prefix='/api/post')
 app.register_blueprint(tradeRoutes, url_prefix='/api/trade')
+app.register_blueprint(userBalanceRoutes, url_prefix='/api/userBalance')
 db.init_app(app)
 Migrate(app, db)
 

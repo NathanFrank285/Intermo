@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
+import Dashboard from "./components/Dashboard";
+import Posts from "./components/Posts";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
@@ -36,15 +38,18 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path="/users" exact={true} >
+        {/* <ProtectedRoute path="/users" exact={true} >
           <UsersList/>
-        </ProtectedRoute>
+        </ProtectedRoute> */}
         {/* <ProtectedRoute path="/users/:userId" exact={true} >
           <User />
         </ProtectedRoute> */}
         <Route path="/" exact={true}>
-          <h1>My Home Page</h1>
+          <Dashboard />
         </Route>
+        <ProtectedRoute path="/posts" exact={true}>
+          <Posts />
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );
