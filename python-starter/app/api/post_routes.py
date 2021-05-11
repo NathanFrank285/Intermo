@@ -15,8 +15,10 @@ def getPosts(base, quantity, direction):
   id = current_user.id
   # pairId = Currency.query.filter(Currency.id == base).first().to_dict()
 
+  pairName = Currency.query.filter(Currency.id == base).first().to_dict()['name']
+  print(pairName)
 
-  posts = Post.query.filter(and_(Post.postedCurrencyId == base), Post.bidOrOffer != direction).join(User).all()
+  posts = Post.query.filter(and_(Post.postedCurrencyId == base), Post.bidOrOffer != direction, Post.quantity >= quantity, Post.userId != id).join(User).all()
   # todo the user object is being added to the posts variable, need to find a way to add this to the dict function so it can be sent to redux
   # for post in posts:
   #   print("------------------",post.user)
@@ -24,7 +26,9 @@ def getPosts(base, quantity, direction):
   output = {}
   count = 0
   for post in posts:
-    output[count]= post.to_dict()
+    postDict = post.to_dict()
+    postDict['name'] = pairName
+    output[count] = postDict
     count = count + 1
   # output['search'] = [base, quantity, direction]
 

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {useHistory } from "react-router-dom";
-// import {getPostsThunk} from '../../store/posts'
+import { useHistory, NavLink } from "react-router-dom";
+import {newTradeThunk} from '../../store/trades'
 import "./Posts.css";
 
 function Posts() {
   const dispatch = useDispatch();
   let posts = useSelector(state=>state?.posts)
+  let tradeQuantity = useSelector(state=>Number(state?.search?.quantity))
   const history = useHistory();
   const [makerId, setMakerId] = useState(0)
   const [makerCurrencyId, setMakerCurrencyId] = useState(0)
@@ -20,9 +21,18 @@ function Posts() {
     numberOfPosts = Object.entries(posts).length
     posts = Object.entries(posts)
   }
-function submitTrade(date, makerDirection, price, quantity, makerId) {
-  console.log(date, makerDirection, price, quantity, makerId);
-  history.push('/')
+function submitTrade(date, postedCurrencyId, makerDirection, price, quantity, makerId, postId) {
+  const data = {
+    date,
+    postedCurrencyId,
+    makerDirection,
+    price,
+    quantity,
+    makerId,
+    postId,
+    tradeQuantity,
+  };
+  dispatch(newTradeThunk(data))
 }
 // bidOrOffer: "offer";
 // created_on: "Wed, 05 May 2021 00:00:00 GMT";
@@ -48,6 +58,7 @@ function submitTrade(date, makerDirection, price, quantity, makerId) {
               ).toLocaleDateString();
               return (
                 <div key={id} className="singlePost">
+                  <div className="postElement">{post[1].name}</div>
                   <div className="postElement">Posted on {date}</div>
                   <div className="postElement">
                     {post[1].bidOrOffer} is at {post[1].price}
@@ -55,17 +66,21 @@ function submitTrade(date, makerDirection, price, quantity, makerId) {
                   <div className="postElement">Quantity: {post[1].quantity}</div>
                   <button className="tradeButton"
                   onClick={()=>{submitTrade(
-                    date,
+                    new Date(),
+                    post[1].postedCurrencyId,
                     post[1].bidOrOffer,
                     post[1].price,
                     post[1].quantity,
-                    post[1].userId
-                  );}}
+                    post[1].userId,
+                    post[1].id,
+                  )}}
                   >Trade</button>
                 </div>
               );})
           ) : (
-            <div>False</div>
+            <NavLink to='/'>
+              <div>No trade posts available, try revising your search</div>
+            </NavLink>
           )}
         </div>
       </div>

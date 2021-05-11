@@ -5,6 +5,8 @@ import posts from './posts';
 import trades from './trades'
 import pairs from './pairs'
 import userBalance from './userBalance'
+import search from './search'
+
 
 
 const rootReducer = combineReducers({
@@ -12,7 +14,8 @@ const rootReducer = combineReducers({
     posts,
     trades,
     pairs,
-    userBalance
+    userBalance,
+    search
 });
 
 let enhancer;

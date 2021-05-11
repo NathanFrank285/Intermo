@@ -1,3 +1,5 @@
+import {saveSearch} from './search'
+
 const GET_POSTS = 'posts/GET_POSTS'
 
 const getPosts = (searchResults) => {
@@ -12,6 +14,7 @@ export const getPostsThunk = (searchData) => async (dispatch) => {
   const data = await fetch(`/api/post/${base}/${quantity}/${direction}`)
   const response = await data.json()
   dispatch(getPosts(response))
+  dispatch(saveSearch(searchData))
   return
 }
 
