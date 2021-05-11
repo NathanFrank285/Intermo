@@ -22,3 +22,15 @@ def getTrades():
   print(output)
 
   return output
+
+@tradeRoutes.route('/newTrade', methods=['POST'])
+@login_required
+def newTrade():
+  takerId = currentUserId
+  #todo Delete post, then update both user balances accordingly, create new trades for each user (how to account for both sides relating to eachother, add a unique trade serial key to link offsetting sides with a uuid?)
+
+  # todo have to inverse the direction, for taker of the trade
+  if makerDirection == 'offer':
+    takerDirection = 'bid'
+  else:
+    takerDirection = 'offer'

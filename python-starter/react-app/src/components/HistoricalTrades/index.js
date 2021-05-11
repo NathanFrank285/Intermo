@@ -22,7 +22,7 @@ function HistoricalTrades() {
   // takerId: 1;
   const tradeKeys = Object.keys(trades)
   const rows = tradeKeys?.map((tradeKey, id)=>{
-    let date = new Date(trades[`${tradeKey}`]["created_on"]).toLocaleDateString("en-US")
+    let date = new Date(trades[`${tradeKey}`]["created_on"]).toLocaleDateString()
     let direction = trades[`${tradeKey}`]["bidOrOffer"] === 'bid' ? 'Buy' : 'Sell';
     return (
       <tr key={id}>
