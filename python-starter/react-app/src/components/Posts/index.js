@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
 import {newTradeThunk} from '../../store/trades'
+const { exchangeRates } = require("exchange-rates-api");
 import "./Posts.css";
 
 function Posts() {

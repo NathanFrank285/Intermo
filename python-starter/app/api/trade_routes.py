@@ -2,11 +2,11 @@ from flask import Blueprint, request
 from flask_login import current_user, login_required
 from app.models import db, Trade, Currency, UserBalance
 from sqlalchemy import and_, or_
-from forex_python.converter import CurrencyRates
+# from forex_python.converter import CurrencyRates
 import uuid
 
 
-c = CurrencyRates()
+# c = CurrencyRates()
 
 
 tradeRoutes = Blueprint('trade', __name__)
@@ -53,6 +53,7 @@ def newTrade():
   makerId = tradeData['makerId']
   takerId = current_user.id
   makerCurrencyId = tradeData['postedCurrencyId']
+  takerCurrencyId = tradeData['postedCurrencyId']
   quantity = tradeData['quantity']
   makerDirection = tradeData['makerDirection']
   price = tradeData['price']
@@ -73,16 +74,29 @@ def newTrade():
     # commit both changes to the user Balance
     db.session.commit()
     #Create new trades for both the maker and taker
-    # makerTrade = Trade(
+    makerTrade = Trade(
+      makerCurrencyId=makerCurrencyId,
+      takerCurrencyId=takerCurrencyId,
+      quantity=tradeQuantity,
+      bidOrOffer=makerDirection,
+      price=price,
+      postId=postId,
+      created_on=date,
+      traderId = makerId,
+      uniqueTradeId=uniqueTradeId
+    )
 
-    #   quantity=tradeQuantity,
-    #   bidOrOffer=makerDirection,
-    #   price=price,
-    #   postId=postId,
-    #   created_on=date,
-    #   traderId = makerId,
-    #   uniqueTradeId=uniqueTradeId
-    # )
+    takerTrade = Trade(
+      makerCurrencyId=makerCurrencyId,
+      takerCurrencyId=takerCurrencyId,
+      quantity=tradeQuantity,
+      bidOrOffer=takerDirection,
+      price=price,
+      postId=postId,
+      created_on=date,
+      traderId = takerId,
+      uniqueTradeId=uniqueTradeId
+    )
 
 
 
