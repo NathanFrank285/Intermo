@@ -21,6 +21,7 @@ function HistoricalTrades() {
   // takerCurrencyId: 1;
   // takerId: 1;
   const tradeKeys = Object.keys(trades)
+  console.log(tradeKeys)
   const rows = tradeKeys?.map((tradeKey, id)=>{
     let date = new Date(trades[`${tradeKey}`]["created_on"]).toLocaleDateString()
     let direction = trades[`${tradeKey}`]["bidOrOffer"] === 'bid' ? 'Buy' : 'Sell';
@@ -28,7 +29,7 @@ function HistoricalTrades() {
       <tr key={id}>
         <td>{date}</td>
         <td>{direction}</td>
-        <td>{tradeKey}</td>
+        <td>{trades[`${tradeKey}`]["name"]}</td>
         <td>{trades[`${tradeKey}`]["quantity"]}</td>
         <td>{trades[`${tradeKey}`]["price"]}</td>
       </tr>
@@ -47,7 +48,7 @@ function HistoricalTrades() {
             <th>Quantity</th>
             <th>Price</th>
           </tr>
-          {trades && Object.keys(trades).length > 1
+          {trades && Object.keys(trades).length > 0
             ? rows
             : "No trade data available"}
         </tbody>

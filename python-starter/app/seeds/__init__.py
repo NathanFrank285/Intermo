@@ -10,8 +10,8 @@ seed_commands = AppGroup('seed')
 def seed():
     seed_users()
     seed_currencies()
-    seed_trades()
     seed_posts()
+    seed_trades()
     seed_userBalance()
     # Add other seed functions here
 
