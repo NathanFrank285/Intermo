@@ -2,9 +2,9 @@ from flask import Blueprint
 from flask_login import current_user, login_required
 from app.models import db, Currency, Post, User
 from sqlalchemy import and_
-# from forex_python.converter import CurrencyRates
+from forex_python.converter import CurrencyRates
 
-# c = CurrencyRates()
+c = CurrencyRates()
 
 
 postRoutes = Blueprint('post', __name__)

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
+import ExchangeRates from '../ExchangeRates'
 import {newTradeThunk} from '../../store/trades'
-const { exchangeRates } = require("exchange-rates-api");
 import "./Posts.css";
 
 function Posts() {
@@ -49,7 +49,7 @@ function submitTrade(date, postedCurrencyId, makerDirection, price, quantity, ma
     return (
       <div>
         <div className="currentRate">
-          <h2>I am the current exchange rate Div</h2>
+          <ExchangeRates/>
         </div>
         <div className="postContainer">
           {numberOfPosts > 0 ? (

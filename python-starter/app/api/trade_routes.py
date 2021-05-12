@@ -62,6 +62,12 @@ def newTrade():
   date = tradeData['date']
   uniqueTradeId = uuid.uuid1()
 
+  # rate = c.get_rate('USD', 'INR')
+
+  # todo use the converted quantity to adjust user balances correctly, 1.2 USD per 1 etc. 
+  convertedQuantity = c.convert('USD', 'INR', 10)
+  print(rate, "--------------------I am the RATEEEEE")
+
   if makerDirection == 'offer':
     takerDirection = 'bid'
     #Subtract trade quantity from the balance of maker

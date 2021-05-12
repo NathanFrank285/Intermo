@@ -6,6 +6,7 @@ import trades from './trades'
 import pairs from './pairs'
 import userBalance from './userBalance'
 import search from './search'
+import currentRate from './currentRate'
 
 
 
@@ -15,7 +16,9 @@ const rootReducer = combineReducers({
     trades,
     pairs,
     userBalance,
-    search
+    search,
+    currentRate,
+
 });
 
 let enhancer;
