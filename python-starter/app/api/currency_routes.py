@@ -1,9 +1,9 @@
 from flask import Blueprint
 from flask_login import current_user, login_required
 from app.models import Currency
-from forex_python.converter import CurrencyRates
+# from forex_python.converter import CurrencyRates
 
-c = CurrencyRates()
+# c = CurrencyRates()
 
 
 currencyRoutes = Blueprint('currency', __name__)

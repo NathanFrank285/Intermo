@@ -72,18 +72,17 @@ def newTrade():
     takerBalance.quantity = takerBalance.quantity + tradeQuantity
     # commit both changes to the user Balance
     db.session.commit()
-
     #Create new trades for both the maker and taker
-    makerTrade = Trade(
-      
-      quantity=tradeQuantity,
-      bidOrOffer=makerDirection,
-      price=price,
-      postId=postId,
-      created_on=date,
-      traderId = makerId,
-      uniqueTradeId=uniqueTradeId
-    )
+    # makerTrade = Trade(
+
+    #   quantity=tradeQuantity,
+    #   bidOrOffer=makerDirection,
+    #   price=price,
+    #   postId=postId,
+    #   created_on=date,
+    #   traderId = makerId,
+    #   uniqueTradeId=uniqueTradeId
+    # )
 
 
 

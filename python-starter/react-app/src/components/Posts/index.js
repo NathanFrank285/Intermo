@@ -33,6 +33,7 @@ function submitTrade(date, postedCurrencyId, makerDirection, price, quantity, ma
     tradeQuantity,
   };
   dispatch(newTradeThunk(data))
+  history.push('/')
 }
 // bidOrOffer: "offer";
 // created_on: "Wed, 05 May 2021 00:00:00 GMT";
