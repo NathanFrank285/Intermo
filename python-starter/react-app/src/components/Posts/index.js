@@ -3,18 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
 import ExchangeRates from '../ExchangeRates'
 import {newTradeThunk} from '../../store/trades'
+import { getUserBalanceThunk } from "../../store/userBalance";
 import "./Posts.css";
 
 function Posts() {
   const dispatch = useDispatch();
   let posts = useSelector(state=>state?.posts)
   let tradeQuantity = useSelector(state=>Number(state?.search?.quantity))
+  let baseName = useSelector((state) => state?.search?.base);
+  let quoteName = useSelector((state) => state?.search?.quote);
   const history = useHistory();
-  const [makerId, setMakerId] = useState(0)
-  const [makerCurrencyId, setMakerCurrencyId] = useState(0)
-  const [quantity, setQuantity] = useState(0)
-  const [price, setPrice] = useState(0)
-  const [makerDirection, setMakerDirection] = useState('offer')
+  // const [makerId, setMakerId] = useState(0)
+  // const [makerCurrencyId, setMakerCurrencyId] = useState(0)
+  // const [quantity, setQuantity] = useState(0)
+  // const [price, setPrice] = useState(0)
+  // const [makerDirection, setMakerDirection] = useState('offer')
 
 
   let numberOfPosts;
@@ -22,7 +25,7 @@ function Posts() {
     numberOfPosts = Object.entries(posts).length
     posts = Object.entries(posts)
   }
-function submitTrade(date, postedCurrencyId, makerDirection, price, quantity, makerId, postId) {
+const submitTrade = async (date, postedCurrencyId, makerDirection, price, quantity, makerId, postId) => {
   const data = {
     date,
     postedCurrencyId,
@@ -32,8 +35,10 @@ function submitTrade(date, postedCurrencyId, makerDirection, price, quantity, ma
     makerId,
     postId,
     tradeQuantity,
+    baseName,
+    quoteName
   };
-  dispatch(newTradeThunk(data))
+  await dispatch(newTradeThunk(data))
   history.push('/')
 }
 // bidOrOffer: "offer";

@@ -12,8 +12,8 @@ def seed():
     seed_currencies()
     seed_posts()
     seed_trades()
-    seed_userBalance()
     seed_singleCurrencies()
+    seed_userBalance()
     # Add other seed functions here
 
 # Creates the `flask seed undo` command

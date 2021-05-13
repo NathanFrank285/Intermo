@@ -22,7 +22,6 @@ export const getTradesThunk = () => async (dispatch) => {
 }
 
 export const newTradeThunk = (newTrade) => async (dispatch) => {
-  console.log(newTrade)
   const data = await fetch("/api/trade/newTrade", {
     method: "POST",
     headers: {
@@ -30,6 +29,8 @@ export const newTradeThunk = (newTrade) => async (dispatch) => {
     },
     body: JSON.stringify(newTrade),
   });
+  const response = await data.json()
+  
   // const response = await data.json()
   // dispatch(newTrade(response))
   return

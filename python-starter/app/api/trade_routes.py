@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import db, Trade, Currency, UserBalance
+from app.models import db, Trade, Currency, UserBalance, SingleCurrency
 from sqlalchemy import and_, or_
 from forex_python.converter import CurrencyRates
 import uuid
@@ -56,7 +56,8 @@ def newTrade():
 
 
   #? Trade ingredients
-  print(tradeData)
+  print('---------------I am right before the trade print log')
+  print("quotesssss------------",tradeData['quoteName'], tradeData['baseName'])
   makerId = tradeData['makerId']
   takerId = current_user.id
   makerCurrencyId = tradeData['postedCurrencyId']
@@ -67,6 +68,9 @@ def newTrade():
   postId = tradeData['postId']
   tradeQuantity = tradeData['tradeQuantity']
   date = tradeData['date']
+  baseCurrencyId = SingleCurrency.query.filter(SingleCurrency.name == tradeData['baseName']).first().to_dict()['id']
+  quoteCurrencyId = SingleCurrency.query.filter(
+      SingleCurrency.name == tradeData['quoteName']).first().to_dict()['id']
   uniqueTradeId = uuid.uuid1()
 
 
@@ -74,14 +78,25 @@ def newTrade():
   if makerDirection == 'offer':
     takerDirection = 'bid'
     #Subtract trade quantity from the balance of maker
-    makerBalance = UserBalance.query.filter(and_(UserBalance.userId == makerId, UserBalance.currencyId == makerCurrencyId)).first()
-    makerBalance.quantity = makerBalance.quantity - tradeQuantity
+    makerBaseBalance = UserBalance.query.filter(and_(
+        UserBalance.userId == makerId, UserBalance.currencyId == baseCurrencyId)).first()
 
+    makerQuoteBalance = UserBalance.query.filter(and_(
+        UserBalance.userId == makerId, UserBalance.currencyId == quoteCurrencyId)).first()
+
+    makerBaseBalance.quantity = makerBaseBalance.quantity - tradeQuantity
+    makerQuoteBalance.quantity = makerQuoteBalance.quantity + tradeQuantity
     #Add trade quantity to the balance of taker
-    takerBalance = UserBalance.query.filter(and_(UserBalance.userId == takerId, UserBalance.currencyId == makerCurrencyId)).first()
-    takerBalance.quantity = takerBalance.quantity + tradeQuantity
+    takerBaseBalance = UserBalance.query.filter(and_(
+        UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()
+
+    takerQuoteBalance = UserBalance.query.filter(and_(UserBalance.userId == takerId, UserBalance.currencyId == quoteCurrencyId)).first()
+
+    takerBaseBalance.quantity = takerBaseBalance.quantity + tradeQuantity
+    takerQuoteBalance.quantity = takerQuoteBalance.quantity - tradeQuantity
     # commit both changes to the user Balance
     db.session.commit()
+
     #Create new trades for both the maker and taker
     makerTrade = Trade(
       makerCurrencyId=makerCurrencyId,
@@ -117,7 +132,7 @@ def newTrade():
 
 
 
-  return {'success': 'sucks'}
+  return {'success': ''}
 
 
   #todo  create new trades for each user (how to account for both sides relating to eachother, add a unique trade serial key to link offsetting sides with a uuid?), check if the total quantity would put the Posters desired trade value to 0, if so, set the Post.live to False, else leave it true
