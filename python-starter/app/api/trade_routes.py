@@ -56,21 +56,30 @@ def newTrade():
 
 
   #? Trade ingredients
-  print('---------------I am right before the trade print log')
-  print("quotesssss------------",tradeData['quoteName'], tradeData['baseName'])
   makerId = tradeData['makerId']
   takerId = current_user.id
+
   makerCurrencyId = tradeData['postedCurrencyId']
   takerCurrencyId = tradeData['postedCurrencyId']
+
   quantity = tradeData['quantity']
   makerDirection = tradeData['makerDirection']
   price = tradeData['price']
   postId = tradeData['postId']
-  tradeQuantity = tradeData['tradeQuantity']
+  baseQuantity = tradeData['tradeQuantity']
   date = tradeData['date']
-  baseCurrencyId = SingleCurrency.query.filter(SingleCurrency.name == tradeData['baseName']).first().to_dict()['id']
+
+  baseCurrencyId = SingleCurrency.query.filter(
+      SingleCurrency.name == tradeData['baseName']).first().to_dict()['id']
+  baseCurrencyName = tradeData['baseName']
   quoteCurrencyId = SingleCurrency.query.filter(
       SingleCurrency.name == tradeData['quoteName']).first().to_dict()['id']
+  quoteCurrencyName = tradeData['quoteName']
+  quoteQuantity = c.convert(
+      f'{baseCurrencyName}', f'{quoteCurrencyName}', baseQuantity)
+
+  print(quoteQuantity, baseQuantity, 'I am the converted quantity----------------------------------------------------------------')
+
   uniqueTradeId = uuid.uuid1()
 
 
@@ -84,16 +93,16 @@ def newTrade():
     makerQuoteBalance = UserBalance.query.filter(and_(
         UserBalance.userId == makerId, UserBalance.currencyId == quoteCurrencyId)).first()
 
-    makerBaseBalance.quantity = makerBaseBalance.quantity - tradeQuantity
-    makerQuoteBalance.quantity = makerQuoteBalance.quantity + tradeQuantity
+    makerBaseBalance.quantity = makerBaseBalance.quantity - baseQuantity
+    makerQuoteBalance.quantity = makerQuoteBalance.quantity + quoteQuantity
     #Add trade quantity to the balance of taker
     takerBaseBalance = UserBalance.query.filter(and_(
         UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()
 
     takerQuoteBalance = UserBalance.query.filter(and_(UserBalance.userId == takerId, UserBalance.currencyId == quoteCurrencyId)).first()
 
-    takerBaseBalance.quantity = takerBaseBalance.quantity + tradeQuantity
-    takerQuoteBalance.quantity = takerQuoteBalance.quantity - tradeQuantity
+    takerBaseBalance.quantity = takerBaseBalance.quantity + baseQuantity
+    takerQuoteBalance.quantity = takerQuoteBalance.quantity - quoteQuantity
     # commit both changes to the user Balance
     db.session.commit()
 
@@ -101,7 +110,7 @@ def newTrade():
     makerTrade = Trade(
       makerCurrencyId=makerCurrencyId,
       takerCurrencyId=takerCurrencyId,
-      quantity=tradeQuantity,
+      quantity=baseQuantity,
       bidOrOffer=makerDirection,
       price=price,
       postId=postId,
@@ -113,7 +122,7 @@ def newTrade():
     takerTrade = Trade(
       makerCurrencyId=makerCurrencyId,
       takerCurrencyId=takerCurrencyId,
-      quantity=tradeQuantity,
+      quantity=baseQuantity,
       bidOrOffer=takerDirection,
       price=price,
       postId=postId,
