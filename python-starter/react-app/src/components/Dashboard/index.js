@@ -14,7 +14,7 @@ function Dashboard() {
   const history = useHistory()
   const user = useSelector(state => state?.session?.user)
   const pairs = useSelector(state => state?.pairs[0])
-  const [base, setBaseSearchValue] = useState(1)
+  const [pair, setPairSearchValue] = useState('EUR/USD')
   const [quote, setQuoteSearchValue] = useState('')
   const [quantity, setQuantity] = useState('')
   const [direction, setDirection] = useState('bid')
@@ -25,7 +25,7 @@ function Dashboard() {
 
   const findPosts = () => {
     const searchData = {
-      base,
+      pair,
       quantity,
       direction
     }
@@ -41,11 +41,11 @@ function Dashboard() {
             <label>What pair would you like to convert?</label>
             <select
               required
-              onChange={(e) => setBaseSearchValue(e.target.value)}
+              onChange={(e) => setPairSearchValue(e.target.value)}
             >
               {pairs &&
                 pairs.map((pair) => (
-                  <option key={pair["id"]} value={pair["id"]}>
+                  <option key={pair["id"]} value={pair["name"]}>
                     {pair['name']}
                   </option>
                 ))}

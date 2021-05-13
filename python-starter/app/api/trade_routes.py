@@ -2,11 +2,11 @@ from flask import Blueprint, request
 from flask_login import current_user, login_required
 from app.models import db, Trade, Currency, UserBalance
 from sqlalchemy import and_, or_
-# from forex_python.converter import CurrencyRates
+from forex_python.converter import CurrencyRates
 import uuid
 
 
-# c = CurrencyRates()
+c = CurrencyRates()
 
 
 tradeRoutes = Blueprint('trade', __name__)
@@ -48,6 +48,13 @@ def getTrades():
 def newTrade():
   tradeData = request.json
 
+
+  # todo use the converted quantity to adjust user balances correctly, 1.2 USD per 1 etc. need to get the converted amount and use the tradeQuantity and the converted quantity from the api to add and subtract the correct amounts from both balances on each user
+  # rate = c.get_rate('USD', 'INR')
+  # convertedQuantity = c.convert('USD', 'INR', 10)
+  # print(rate, "--------------------I am the RATEEEEE")
+
+
   #? Trade ingredients
   print(tradeData)
   makerId = tradeData['makerId']
@@ -62,11 +69,7 @@ def newTrade():
   date = tradeData['date']
   uniqueTradeId = uuid.uuid1()
 
-  # rate = c.get_rate('USD', 'INR')
 
-  # todo use the converted quantity to adjust user balances correctly, 1.2 USD per 1 etc. 
-  convertedQuantity = c.convert('USD', 'INR', 10)
-  print(rate, "--------------------I am the RATEEEEE")
 
   if makerDirection == 'offer':
     takerDirection = 'bid'
@@ -103,8 +106,8 @@ def newTrade():
       traderId = takerId,
       uniqueTradeId=uniqueTradeId
     )
-
-
+    db.session.add_all([makerTrade, takerTrade])
+    db.session.commit()
 
   else:
     takerDirection = 'offer'

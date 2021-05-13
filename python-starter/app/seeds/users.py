@@ -1,5 +1,5 @@
 # from werkzeug.security import generate_password_hash
-from app.models import db, User, Currency, Trade, Post, UserBalance
+from app.models import db, User, Currency, Trade, Post, UserBalance, SingleCurrency
 
 
 # Adds a demo user, you can add other users here if you want
@@ -58,6 +58,16 @@ def seed_userBalance():
     balance = [balance1, balance2, balance3, balance4]
     db.session.add_all(balance)
     db.session.commit()
+
+def seed_singleCurrencies():
+    currency1 = SingleCurrency(name='EUR')
+    currency2 = SingleCurrency(name='USD')
+    currency3 = SingleCurrency(name='GBP')
+    currency4 = SingleCurrency(name='AUD')
+    currency5 = SingleCurrency(name='CAD')
+    currencies = [currency1, currency2, currency3, currency4, currency5]
+    db.session.add_all(currencies)
+    db.session.commit()
 # Uses a raw SQL query to TRUNCATE the users table.
 # SQLAlchemy doesn't have a built in function to do this
 # TRUNCATE Removes all the data from the table, and resets
@@ -77,4 +87,7 @@ def undo_trades():
     db.session.commit()
 def undo_userBalance():
     db.session.execute('TRUNCATE userBalances RESTART IDENTITY CASCADE;')
+    db.session.commit()
+def undo_singleCurrencies():
+    db.session.execute('TRUNCATE fiats RESTART IDENTITY CASCADE;')
     db.session.commit()

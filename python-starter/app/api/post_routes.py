@@ -9,26 +9,26 @@ c = CurrencyRates()
 
 postRoutes = Blueprint('post', __name__)
 
-@postRoutes.route('/<base>/<quantity>/<direction>')
+@postRoutes.route('/<base>/<quote>/<quantity>/<direction>')
 @login_required
-def getPosts(base, quantity, direction):
+def getPosts(base, quote, quantity, direction):
   id = current_user.id
   # pairId = Currency.query.filter(Currency.id == base).first().to_dict()
 
-  pairName = Currency.query.filter(Currency.id == base).first().to_dict()['name']
+  # Grab the pair that matches the search
+  pairName = Currency.query.filter(and_(Currency.name.startswith(base), Currency.name.endswith(quote))).first().to_dict()
 
-  posts = Post.query.filter(and_(Post.postedCurrencyId == base), Post.bidOrOffer != direction, Post.quantity >= quantity, Post.userId != id).join(User).all()
+  #search for all posts that match the currency pair, opposite direction of the search, and are greater than or equal to the searched quantity
+  posts = Post.query.filter(and_(Post.postedCurrencyId == pairName['id']), Post.bidOrOffer != direction, Post.quantity >= quantity, Post.userId != id).join(User).all()
   # todo the user object is being added to the posts variable, need to find a way to add this to the dict function so it can be sent to redux
-  # for post in posts:
-  #   print("------------------",post.user)
 
   output = {}
   count = 0
   for post in posts:
     postDict = post.to_dict()
-    postDict['name'] = pairName
+    postDict['name'] = pairName['name']
     output[count] = postDict
-    count = count + 1
+    count += 1
   # output['search'] = [base, quantity, direction]
 
   return output

@@ -20,7 +20,7 @@ class Trade(db.Model):
   price = db.Column(db.Float(6), nullable=False)
   postId = db.Column(db.Integer, db.ForeignKey(
       'posts.id'), nullable=False)
-  uniqueTradeId = db.Column(db.String(36), nullable=False, unique=True)
+  uniqueTradeId = db.Column(db.String(36), nullable=False)
   created_on = db.Column(db.DateTime,  default=db.func.current_timestamp(), nullable=False)
   #timestamps from Stackoverflow: https://stackoverflow.com/questions/12154129/how-can-i-automatically-populate-sqlalchemy-database-fields-flask-sqlalchemy
   post = db.relationship('Post', back_populates='trades')

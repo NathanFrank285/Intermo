@@ -1,18 +1,10 @@
 import React from "react";
-import { exchangeRates } from "exchange-rates-api";
+import { useDispatch, useSelector } from "react-redux";
 import "./ExchangeRates.css";
 
 function ExchangeRates() {
-
-  // let exchangeRate = 0
-  // const query = async () => {
-  //   const data = await exchangeRates().latest().fetch();
-  //   // exchangeRate = data
-  //   console.log(data.GBP)
-  //   return data.GBP
-  // }
-  // exchangeRate = query()
-
+  const dispatch = useDispatch()
+  const currentRate = useSelector(state=>state?.currentRate)
   return (
     <>
       <h1>No exchange rate data</h1>
