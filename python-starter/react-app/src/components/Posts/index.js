@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
 import ExchangeRates from '../ExchangeRates'
 import {newTradeThunk} from '../../store/trades'
-import { getUserBalanceThunk } from "../../store/userBalance";
+// import { getUserBalanceThunk } from "../../store/userBalance";
 import "./Posts.css";
 
 function Posts() {

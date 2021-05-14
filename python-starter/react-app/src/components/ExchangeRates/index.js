@@ -4,10 +4,12 @@ import "./ExchangeRates.css";
 
 function ExchangeRates() {
   const dispatch = useDispatch()
-  const currentRate = useSelector(state=>state?.currentRate)
+  const currentRate = useSelector(state=>state?.currentRate?.rate)
+
+
   return (
     <>
-      <h1>No exchange rate data</h1>
+      {currentRate && <p>The current rate is {currentRate}</p>}
     </>
   );
 }

@@ -78,9 +78,8 @@ def newTrade():
   quoteQuantity = c.convert(
       f'{baseCurrencyName}', f'{quoteCurrencyName}', baseQuantity)
 
-  print(quoteQuantity, baseQuantity, 'I am the converted quantity----------------------------------------------------------------')
-
   uniqueTradeId = uuid.uuid1()
+
 
 
 

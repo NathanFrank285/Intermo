@@ -1,4 +1,5 @@
 import {saveSearch} from './search'
+import {getCurrentRateThunk} from './currentRate'
 
 const GET_POSTS = 'posts/GET_POSTS'
 
@@ -23,18 +24,19 @@ export const getPostsThunk = (searchData) => async (dispatch) => {
   const response = await data.json()
   dispatch(getPosts(response))
   dispatch(saveSearch(searchData))
+  dispatch(getCurrentRateThunk(pair));
   return
 }
 
 export const newPostThunk = (newPost) => async (dispatch) => {
-  const data = await fetch("/api/post", {
+  await fetch("/api/post", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newPost),
   });
-  const response = await data.json()
+  // const response = await data.json()
 }
 
 let initialState = {}

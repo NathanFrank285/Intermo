@@ -9,8 +9,14 @@ const getRate = (fxRate) => {
 
 
 
-export const getCurrentRateThunk= (currencyPair) => async (dispatch) => {
-
+export const getCurrentRateThunk = (currencyPair) => async (dispatch) => {
+  const pairArray = currencyPair.split("/");
+  const base = pairArray[0];
+  const quote = pairArray[1];
+  const data = await fetch(`/api/currency/${base}/${quote}`);
+  const response = await data.json();
+  dispatch(getRate(response));
+  return;
 }
 
 let initialState = {}

@@ -1,5 +1,5 @@
 const GET_TRADES = 'trades/GET_TRADES';
-const NEW_TRADE = "trades/NEW_TRADE";
+// const NEW_TRADE = "trades/NEW_TRADE";
 
 const getTrades = (trades) => {
   return {
@@ -8,12 +8,12 @@ const getTrades = (trades) => {
   }
 }
 
-const newTrade = (trade) => {
-  return {
-    type: NEW_TRADE,
-    trade
-  }
-}
+// const newTrade = (trade) => {
+//   return {
+//     type: NEW_TRADE,
+//     trade
+//   }
+// }
 
 export const getTradesThunk = () => async (dispatch) => {
   const data = await fetch('/api/trade')
@@ -22,15 +22,15 @@ export const getTradesThunk = () => async (dispatch) => {
 }
 
 export const newTradeThunk = (newTrade) => async (dispatch) => {
-  const data = await fetch("/api/trade/newTrade", {
+  await fetch("/api/trade/newTrade", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newTrade),
   });
-  const response = await data.json()
-  
+  // const response = await data.json()
+
   // const response = await data.json()
   // dispatch(newTrade(response))
   return

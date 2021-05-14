@@ -8,14 +8,13 @@ import PortfolioGraph from '../PortfolioGraph'
 import "./Dashboard.css";
 
 // todo create the search bar with buy and sell buttons below, the trade history table on the bottom left and the portfolio allocation graph on the right
-// todo
+
 function Dashboard() {
   const dispatch = useDispatch()
   const history = useHistory()
   const user = useSelector(state => state?.session?.user)
   const pairs = useSelector(state => state?.pairs[0])
   const [pair, setPairSearchValue] = useState('EUR/USD')
-  const [quote, setQuoteSearchValue] = useState('')
   const [quantity, setQuantity] = useState('')
   const [direction, setDirection] = useState('bid')
 
@@ -32,6 +31,7 @@ function Dashboard() {
     dispatch(getPostsThunk(searchData))
     history.push("/posts");
   }
+
   return (
     <div>
       <h2>Welcome, what would you like to convert today?</h2>
