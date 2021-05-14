@@ -36,7 +36,7 @@ function Dashboard() {
     <div>
       <h2>Welcome, what would you like to convert today?</h2>
       <div className="dashboard-container">
-        <form onSubmit={findPosts}>
+        <form className="formContainer" onSubmit={findPosts}>
           <div className="searchBar">
             <label>What pair would you like to convert?</label>
             <select

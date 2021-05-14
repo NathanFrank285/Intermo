@@ -1,11 +1,15 @@
 .dashboard-container{
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 80%;
+  grid-template-rows: 150px 80%;
   grid-template-areas:
   'searchBar .'
   'trades portfolio'
   ;
+}
+
+.formContainer{
+  margin-bottom: 10px;
 }
 
 .searchBar{

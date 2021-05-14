@@ -20,8 +20,8 @@ function HistoricalTrades() {
   // quantity: 120;
   // takerCurrencyId: 1;
   // takerId: 1;
+  //todo: paginate the trade data
   const tradeKeys = Object.keys(trades)
-  console.log(tradeKeys)
   const rows = tradeKeys?.map((tradeKey, id)=>{
     let date = new Date(trades[`${tradeKey}`]["created_on"]).toLocaleDateString()
     let direction = trades[`${tradeKey}`]["bidOrOffer"] === 'bid' ? 'Buy' : 'Sell';

@@ -110,7 +110,7 @@ def newTrade():
     makerTrade = Trade(
       makerCurrencyId=makerCurrencyId,
       takerCurrencyId=takerCurrencyId,
-      quantity=baseQuantity,
+      quantity=quoteQuantity,
       bidOrOffer=makerDirection,
       price=price,
       postId=postId,
@@ -135,6 +135,54 @@ def newTrade():
 
   else:
     takerDirection = 'offer'
+
+    #Subtract trade quantity from the balance of maker
+    makerBaseBalance = UserBalance.query.filter(and_(
+        UserBalance.userId == makerId, UserBalance.currencyId == baseCurrencyId)).first()
+
+    makerQuoteBalance = UserBalance.query.filter(and_(
+        UserBalance.userId == makerId, UserBalance.currencyId == quoteCurrencyId)).first()
+
+    makerBaseBalance.quantity = makerBaseBalance.quantity + baseQuantity
+    makerQuoteBalance.quantity = makerQuoteBalance.quantity - quoteQuantity
+    #Add trade quantity to the balance of taker
+    takerBaseBalance = UserBalance.query.filter(and_(
+        UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()
+
+    takerQuoteBalance = UserBalance.query.filter(and_(
+        UserBalance.userId == takerId, UserBalance.currencyId == quoteCurrencyId)).first()
+
+    takerBaseBalance.quantity = takerBaseBalance.quantity - baseQuantity
+    takerQuoteBalance.quantity = takerQuoteBalance.quantity + quoteQuantity
+    # commit both changes to the user Balance
+    db.session.commit()
+
+    #Create new trades for both the maker and taker
+    makerTrade = Trade(
+        makerCurrencyId=makerCurrencyId,
+        takerCurrencyId=takerCurrencyId,
+        quantity=baseQuantity,
+        bidOrOffer=makerDirection,
+        price=price,
+        postId=postId,
+        created_on=date,
+        traderId=makerId,
+        uniqueTradeId=uniqueTradeId
+    )
+
+    takerTrade = Trade(
+        makerCurrencyId=makerCurrencyId,
+        takerCurrencyId=takerCurrencyId,
+        quantity=baseQuantity,
+        bidOrOffer=takerDirection,
+        price=price,
+        postId=postId,
+        created_on=date,
+        traderId=takerId,
+        uniqueTradeId=uniqueTradeId
+    )
+    db.session.add_all([makerTrade, takerTrade])
+    db.session.commit()
 
 
 
