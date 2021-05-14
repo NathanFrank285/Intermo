@@ -7,10 +7,10 @@ class UserBalance(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   currencyId = db.Column(db.Integer, db.ForeignKey(
-      'currencies.id'), nullable=False)
-  quantity = db.Column(db.Integer, nullable=False)
+      'fiats.id'), nullable=False)
+  quantity = db.Column(db.Float(2), nullable=False)
   user = db.relationship('User', back_populates='userBalance')
-  userCurrencies = db.relationship('Currency', back_populates='userBalance')
+  userCurrencies = db.relationship('SingleCurrency', back_populates='userBalance')
 
 
 

@@ -34,6 +34,7 @@ forex-python = "*"
 psycopg2-binary = "==2.8.6"
 autopep8 = "*"
 pylint = "*"
+forex-python = "*"
 
 [requires]
 python_version = "3.9"

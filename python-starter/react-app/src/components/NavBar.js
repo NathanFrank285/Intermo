@@ -8,8 +8,8 @@ import './NavBar.css'
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("demo@aa.io");
-  const [password, setPassword] = useState("password");
+  const [email] = useState("demo@aa.io");
+  const [password] = useState("password");
   const user = useSelector((state) => state?.session?.user)
 
   const loginDemoUser = async () => {
@@ -21,7 +21,12 @@ const NavBar = () => {
     <div className="navbar-container">
       <div className="logo">
         <NavLink to="/" exact={true} className="logo">
-          <img className="logo--img" src={logo}></img>
+          <img className="logo--img" src={logo} alt="Intermo logo"></img>
+        </NavLink>
+      </div>
+      <div className="newPost-container">
+        <NavLink to="/newPost" exact={true} className="newPost-button">
+          Create a Post
         </NavLink>
       </div>
       {!user && !user ? (

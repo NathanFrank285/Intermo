@@ -16,6 +16,7 @@ class Post(db.Model):
     price = db.Column(db.Float(6), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     bidOrOffer = db.Column(db.String(5), nullable=False)
+    live = db.Column(db.Boolean, nullable=False)
     created_on = db.Column(db.DateTime,  default=db.func.current_timestamp())
     updated_on = db.Column(db.DateTime,  default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
     # timestamps from Stackoverflow: https://stackoverflow.com/questions/12154129/how-can-i-automatically-populate-sqlalchemy-database-fields-flask-sqlalchemy
@@ -24,6 +25,7 @@ class Post(db.Model):
                                        foreign_keys=postedCurrencyId)
     wantedCurrency = db.relationship('Currency',
                                        foreign_keys=wantedCurrencyId)
+    trades = db.relationship('Trade', back_populates='post')
 
     def to_dict(self):
         return {
@@ -34,6 +36,7 @@ class Post(db.Model):
             "price": self.price,
             "bidOrOffer": self.bidOrOffer,
             "quantity": self.quantity,
+            'live': self.live,
             "created_on": self.created_on,
             "updated_on": self.updated_on,
         }

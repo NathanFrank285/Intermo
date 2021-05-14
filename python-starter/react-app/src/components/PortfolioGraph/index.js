@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { getUserBalanceThunk } from '../../store/userBalance';
 import { useDispatch, useSelector } from "react-redux";
-import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import './PortfolioGraph.css'
 
 function PortfolioGraph() {

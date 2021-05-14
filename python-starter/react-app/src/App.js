@@ -7,10 +7,11 @@ import NavBar from "./components/NavBar";
 import Dashboard from "./components/Dashboard";
 import Posts from "./components/Posts";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
-import User from "./components/User";
+// import UsersList from "./components/UsersList";
+// import User from "./components/User";
 // import { authenticate } from "./services/auth";
 import { authenticate } from "./store/session";
+import NewPost from "./components/NewPost";
 
 function App() {
   // const [authenticated, setAuthenticated] = useState(false);
@@ -49,6 +50,9 @@ function App() {
         </Route>
         <ProtectedRoute path="/posts" exact={true}>
           <Posts />
+        </ProtectedRoute>
+        <ProtectedRoute path="/newPost" exact={true}>
+          <NewPost/>
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

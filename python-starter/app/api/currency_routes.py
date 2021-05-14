@@ -12,14 +12,10 @@ currencyRoutes = Blueprint('currency', __name__)
 @login_required
 def getCurrency(base, quote):
   id = current_user.id
-  base = base.upper()
-  quote = quote.upper()
+  # rate =  c.get_rate(f'{base}', f'{quote}')
+  rate = c.get_rate('EUR', 'USD')
 
-  output = Currency.query.first().to_dict()
-
-  # baseRates = c.get_rates(f'{base}')
-  # quoteRates = c.get_rates(f'{quote}')
-  return f'{output}'
+  return {'rate': rate}
 
 @currencyRoutes.route('')
 def getCurrencies():

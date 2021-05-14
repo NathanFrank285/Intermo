@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_login import current_user, login_required
-from app.models import db, UserBalance, Currency
+from app.models import db, UserBalance, SingleCurrency
 # from sqlalchemy import and_
 
 userBalanceRoutes = Blueprint('userBalance', __name__)
@@ -14,7 +14,7 @@ def getUserBalance():
   balanceArr = []
   for balance in balances:
     balance = balance.to_dict()
-    balance['currencyId'] = Currency.query.filter(Currency.id == balance['currencyId']).first().to_dict()['name']
+    balance['currencyId'] = SingleCurrency.query.filter(SingleCurrency.id == balance['currencyId']).first().to_dict()['name']
     balanceArr.append(balance)
 
 

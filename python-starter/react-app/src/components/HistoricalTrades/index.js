@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTradesThunk } from "../../store/trades";
 import './HistoricalTrades.css'
@@ -20,6 +20,7 @@ function HistoricalTrades() {
   // quantity: 120;
   // takerCurrencyId: 1;
   // takerId: 1;
+  //todo: paginate the trade data
   const tradeKeys = Object.keys(trades)
   const rows = tradeKeys?.map((tradeKey, id)=>{
     let date = new Date(trades[`${tradeKey}`]["created_on"]).toLocaleDateString()
@@ -28,7 +29,7 @@ function HistoricalTrades() {
       <tr key={id}>
         <td>{date}</td>
         <td>{direction}</td>
-        <td>{tradeKey}</td>
+        <td>{trades[`${tradeKey}`]["name"]}</td>
         <td>{trades[`${tradeKey}`]["quantity"]}</td>
         <td>{trades[`${tradeKey}`]["price"]}</td>
       </tr>
@@ -47,7 +48,7 @@ function HistoricalTrades() {
             <th>Quantity</th>
             <th>Price</th>
           </tr>
-          {trades && Object.keys(trades).length > 1
+          {trades && Object.keys(trades).length > 0
             ? rows
             : "No trade data available"}
         </tbody>

@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {useHistory } from "react-router-dom";
-// import {getPostsThunk} from '../../store/posts'
+import { useHistory, NavLink } from "react-router-dom";
+import ExchangeRates from '../ExchangeRates'
+import {newTradeThunk} from '../../store/trades'
+// import { getUserBalanceThunk } from "../../store/userBalance";
 import "./Posts.css";
 
 function Posts() {
   const dispatch = useDispatch();
   let posts = useSelector(state=>state?.posts)
+  let tradeQuantity = useSelector(state=>Number(state?.search?.quantity))
+  let baseName = useSelector((state) => state?.search?.base);
+  let quoteName = useSelector((state) => state?.search?.quote);
   const history = useHistory();
-  const [makerId, setMakerId] = useState(0)
-  const [makerCurrencyId, setMakerCurrencyId] = useState(0)
-  const [quantity, setQuantity] = useState(0)
-  const [price, setPrice] = useState(0)
-  const [makerDirection, setMakerDirection] = useState('offer')
+  // const [makerId, setMakerId] = useState(0)
+  // const [makerCurrencyId, setMakerCurrencyId] = useState(0)
+  // const [quantity, setQuantity] = useState(0)
+  // const [price, setPrice] = useState(0)
+  // const [makerDirection, setMakerDirection] = useState('offer')
 
 
   let numberOfPosts;
@@ -20,8 +25,20 @@ function Posts() {
     numberOfPosts = Object.entries(posts).length
     posts = Object.entries(posts)
   }
-function submitTrade(date, makerDirection, price, quantity, makerId) {
-  console.log(date, makerDirection, price, quantity, makerId);
+const submitTrade = async (date, postedCurrencyId, makerDirection, price, quantity, makerId, postId) => {
+  const data = {
+    date,
+    postedCurrencyId,
+    makerDirection,
+    price,
+    quantity,
+    makerId,
+    postId,
+    tradeQuantity,
+    baseName,
+    quoteName
+  };
+  await dispatch(newTradeThunk(data))
   history.push('/')
 }
 // bidOrOffer: "offer";
@@ -37,7 +54,7 @@ function submitTrade(date, makerDirection, price, quantity, makerId) {
     return (
       <div>
         <div className="currentRate">
-          <h2>I am the current exchange rate Div</h2>
+          <ExchangeRates/>
         </div>
         <div className="postContainer">
           {numberOfPosts > 0 ? (
@@ -48,6 +65,7 @@ function submitTrade(date, makerDirection, price, quantity, makerId) {
               ).toLocaleDateString();
               return (
                 <div key={id} className="singlePost">
+                  <div className="postElement">{post[1].name}</div>
                   <div className="postElement">Posted on {date}</div>
                   <div className="postElement">
                     {post[1].bidOrOffer} is at {post[1].price}
@@ -55,17 +73,21 @@ function submitTrade(date, makerDirection, price, quantity, makerId) {
                   <div className="postElement">Quantity: {post[1].quantity}</div>
                   <button className="tradeButton"
                   onClick={()=>{submitTrade(
-                    date,
+                    new Date(),
+                    post[1].postedCurrencyId,
                     post[1].bidOrOffer,
                     post[1].price,
                     post[1].quantity,
-                    post[1].userId
-                  );}}
+                    post[1].userId,
+                    post[1].id,
+                  )}}
                   >Trade</button>
                 </div>
               );})
           ) : (
-            <div>False</div>
+            <NavLink to='/'>
+              <div>No trade posts available, try revising your search</div>
+            </NavLink>
           )}
         </div>
       </div>
