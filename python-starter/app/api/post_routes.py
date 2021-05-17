@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask_login import current_user, login_required
 from app.models import db, Currency, Post, User
 from sqlalchemy import and_
@@ -34,17 +34,29 @@ def getPosts(base, quote, quantity, direction):
   return output
 
 
-@postRoutes.route('/', methods=['POST'])
+# {'pair': '1', 'quantity': '5', 'price': '5', 'direction': 'bid'}
+@postRoutes.route('/new', methods=['POST'])
 @login_required
 def postPosts():
-  post = Post.query.filter(Post.userId == id).first()
+  id = current_user.id
+  postData = request.json
+  newPost = Post(
+    userId=id,
+    postedCurrencyId=int(postData['pair']),
+    wantedCurrencyId=int(postData['pair']),
+    price=postData['price'],
+    quantity=postData['quantity'],
+    bidOrOffer=postData['direction'],
+    live=False
+  )
+  print(newPost)
+  # post = Post.query.filter(Post.userId == id).first()
 
-  db.session.add()
+  db.session.add(newPost)
   db.session.commit()
   # use the request object from flask to access the body of post request
 
-  return
-
+  return {'success': 'test'}
 
 @postRoutes.route('/<postId>', methods=['DELETE'])
 @login_required

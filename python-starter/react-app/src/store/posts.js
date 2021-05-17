@@ -29,14 +29,15 @@ export const getPostsThunk = (searchData) => async (dispatch) => {
 }
 
 export const newPostThunk = (newPost) => async (dispatch) => {
-  await fetch("/api/post", {
+  const response = await fetch("/api/post/new", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newPost),
   });
-  // const response = await data.json()
+  const data = await response.json()
+  console.log(data)
 }
 
 let initialState = {}
