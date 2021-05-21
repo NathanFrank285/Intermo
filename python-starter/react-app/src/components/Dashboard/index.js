@@ -19,7 +19,8 @@ function Dashboard() {
   const [direction, setDirection] = useState('bid')
 
   useEffect(() => {
-    dispatch(getCurrenciesThunk())
+    dispatch(getCurrenciesThunk());
+    // eslint-disable-next-line
   },[])
 
   const findPosts = () => {
@@ -34,7 +35,7 @@ function Dashboard() {
 
   return (
     <div>
-      <h2>Welcome, what would you like to convert today?</h2>
+      <h2>Welcome to Intermo! The only community driven place to exchange foreign currencies. </h2>
       <div className="dashboard-container">
         <form className="formContainer" onSubmit={findPosts}>
           <div className="searchBar">

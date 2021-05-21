@@ -10,6 +10,7 @@ function PortfolioGraph() {
 
   useEffect(() => {
     dispatch(getUserBalanceThunk());
+    // eslint-disable-next-line
   }, []);
   const COLORS = ["#018FFE", "#50514F", "#DFE0E2", "#F24C00", "#C1DF1F", "#679436"];
 
@@ -30,7 +31,7 @@ function PortfolioGraph() {
 
   return (
     <div>
-      <h2 id="portfolioMakeup">Portfolio Makeup</h2>
+      <h2 id="portfolioMakeup">Current Portfolio</h2>
       <div className="pieChart">
         {userBalance && (
           <ResponsiveContainer minWidth="250px" minHeight="250px">

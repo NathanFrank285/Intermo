@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 // import { authenticate } from "./services/auth";
 import { authenticate } from "./store/session";
 import NewPost from "./components/NewPost";
+import Footer from "./components/Footer";
 
 function App() {
   // const [authenticated, setAuthenticated] = useState(false);
@@ -55,6 +56,7 @@ function App() {
           <NewPost/>
         </ProtectedRoute>
       </Switch>
+      <Footer/>
     </BrowserRouter>
   );
 }

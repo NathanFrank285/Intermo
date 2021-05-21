@@ -8,7 +8,8 @@ function HistoricalTrades() {
   const trades = useSelector(state=>state?.trades)
 
   useEffect(() => {
-    dispatch(getTradesThunk())
+    dispatch(getTradesThunk());
+    // eslint-disable-next-line
   },[])
 
   // bidOrOffer: "bid";

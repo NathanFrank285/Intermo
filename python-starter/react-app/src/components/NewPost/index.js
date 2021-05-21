@@ -17,6 +17,7 @@ function NewPost() {
 
   useEffect(() => {
     dispatch(getCurrenciesThunk());
+    // eslint-disable-next-line
   }, []);
 
   const submitPost = (e) => {

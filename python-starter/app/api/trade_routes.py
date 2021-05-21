@@ -72,9 +72,11 @@ def newTrade():
   baseCurrencyId = SingleCurrency.query.filter(
       SingleCurrency.name == tradeData['baseName']).first().to_dict()['id']
   baseCurrencyName = tradeData['baseName']
+
   quoteCurrencyId = SingleCurrency.query.filter(
       SingleCurrency.name == tradeData['quoteName']).first().to_dict()['id']
   quoteCurrencyName = tradeData['quoteName']
+
   #! the api I was using  now requires an apikey that grants very few api calls, while I search for a new api/creating an account, I am using a single static rate for all currencies.
   quoteQuantity = c.convert(
       f'{baseCurrencyName}', f'{quoteCurrencyName}', baseQuantity)
