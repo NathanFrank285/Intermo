@@ -13,7 +13,8 @@ currencyRoutes = Blueprint('currency', __name__)
 def getCurrency(base, quote):
   id = current_user.id
   # rate =  c.get_rate(f'{base}', f'{quote}')
-  rate = c.get_rate('EUR', 'USD')
+  # rate = c.get_rate('EUR', 'USD')
+  rate = 1.2
 
   return {'rate': rate}
 

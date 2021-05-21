@@ -4,9 +4,11 @@ from app.models import db, Trade, Currency, UserBalance, SingleCurrency
 from sqlalchemy import and_, or_
 from forex_python.converter import CurrencyRates
 import uuid
+import os
+print('---------------------------',os.environ['EXCHANGE_API'])
 
 
-c = CurrencyRates()
+c = CurrencyRates('b3a198b8edb0e1f3a990f194d741fadf')
 
 
 tradeRoutes = Blueprint('trade', __name__)
@@ -16,18 +18,15 @@ tradeRoutes = Blueprint('trade', __name__)
 def getTrades():
   id = current_user.id
   trades = Trade.query.filter(Trade.traderId == id).all()
-  print("---------------TRADES",trades)
   output = {}
   count = 0
   for trade in trades:
     tradeDict = trade.to_dict()
     coin = Currency.query.filter(Currency.id == trade.makerCurrencyId).first()
     tradeDict['name'] = coin.name
-    print(tradeDict['name'])
     output[count] = tradeDict
     count += 1
     # print("---------",coin.name)
-  print(output)
 
   return output
 
@@ -46,6 +45,7 @@ def getTrades():
 @tradeRoutes.route('/newTrade', methods=['POST'])
 @login_required
 def newTrade():
+
   tradeData = request.json
 
 
@@ -75,8 +75,11 @@ def newTrade():
   quoteCurrencyId = SingleCurrency.query.filter(
       SingleCurrency.name == tradeData['quoteName']).first().to_dict()['id']
   quoteCurrencyName = tradeData['quoteName']
+  #! the api I was using  now requires an apikey that grants very few api calls, while I search for a new api/creating an account, I am using a single static rate for all currencies.
   quoteQuantity = c.convert(
       f'{baseCurrencyName}', f'{quoteCurrencyName}', baseQuantity)
+  print('---------------------------', quoteQuantity)
+  # quoteQuantity = (1/.8)*baseQuantity
 
   uniqueTradeId = uuid.uuid1()
 
