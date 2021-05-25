@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {newPostThunk} from '../../store/posts'
 import { getCurrenciesThunk } from "../../store/pairs";
+import { store } from "react-notifications-component";
 import "./NewPost.css";
 
 
@@ -20,7 +21,7 @@ function NewPost() {
     // eslint-disable-next-line
   }, []);
 
-  const submitPost = (e) => {
+  const submitPost = async (e) => {
     e.preventDefault();
     const data = {
       pair,
@@ -29,8 +30,41 @@ function NewPost() {
       direction
     }
 
-    dispatch(newPostThunk(data))
-    history.push("/");
+    const {response} = await dispatch(newPostThunk(data))
+    if (response === 'success') {
+      store.addNotification({
+        title: "Post created!",
+        message: "Success, your post has been created",
+        type: "success",
+        insert: "bottom",
+        container: "bottom-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+      history.push("/");
+    } else {
+      store.addNotification({
+        title: "Post failed!",
+        message: "Your post was not created, please try again",
+        type: "danger",
+        insert: "bottom",
+        container: "bottom-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
+      history.push("/newPost");
+    }
+
+
+
   }
 
   return (

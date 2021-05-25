@@ -28,3 +28,6 @@ margin-bottom: 10px;
 .form-button:active{
   color: black;
 }
+.form-button:hover{
+  cursor: pointer;
+}

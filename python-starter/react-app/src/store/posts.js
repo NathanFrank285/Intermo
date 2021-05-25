@@ -37,7 +37,7 @@ export const newPostThunk = (newPost) => async (dispatch) => {
     body: JSON.stringify(newPost),
   });
   const data = await response.json()
-  console.log(data)
+  return data
 }
 
 let initialState = {}

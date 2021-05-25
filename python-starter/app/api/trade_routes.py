@@ -45,136 +45,78 @@ def getTrades():
 @tradeRoutes.route('/newTrade', methods=['POST'])
 @login_required
 def newTrade():
+  try:
+    tradeData = request.json
 
-  tradeData = request.json
+    #? Trade ingredients
+    makerId = tradeData['makerId']
+    takerId = current_user.id
 
+    makerCurrencyId = tradeData['postedCurrencyId']
+    takerCurrencyId = tradeData['postedCurrencyId']
 
-  # todo use the converted quantity to adjust user balances correctly, 1.2 USD per 1 etc. need to get the converted amount and use the tradeQuantity and the converted quantity from the api to add and subtract the correct amounts from both balances on each user
-  # rate = c.get_rate('USD', 'INR')
-  # convertedQuantity = c.convert('USD', 'INR', 10)
-  # print(rate, "--------------------I am the RATEEEEE")
+    quantity = tradeData['quantity']
+    makerDirection = tradeData['makerDirection']
+    price = tradeData['price']
+    postId = tradeData['postId']
+    baseQuantity = tradeData['tradeQuantity']
+    date = tradeData['date']
 
+    baseCurrencyId = SingleCurrency.query.filter(
+        SingleCurrency.name == tradeData['baseName']).first().to_dict()['id']
+    baseCurrencyName = tradeData['baseName']
 
-  #? Trade ingredients
-  makerId = tradeData['makerId']
-  takerId = current_user.id
+    quoteCurrencyId = SingleCurrency.query.filter(
+        SingleCurrency.name == tradeData['quoteName']).first().to_dict()['id']
+    quoteCurrencyName = tradeData['quoteName']
 
-  makerCurrencyId = tradeData['postedCurrencyId']
-  takerCurrencyId = tradeData['postedCurrencyId']
+    #! the api I was using  now requires an apikey that grants very few api calls, while I search for a new api/creating an account, I am using a single static rate for all currencies.
+    quoteQuantity = c.convert(
+        f'{baseCurrencyName}', f'{quoteCurrencyName}', baseQuantity)
+    # print('---------------------------', quoteQuantity)
+    # quoteQuantity = (1/.8)*baseQuantity
 
-  quantity = tradeData['quantity']
-  makerDirection = tradeData['makerDirection']
-  price = tradeData['price']
-  postId = tradeData['postId']
-  baseQuantity = tradeData['tradeQuantity']
-  date = tradeData['date']
-
-  baseCurrencyId = SingleCurrency.query.filter(
-      SingleCurrency.name == tradeData['baseName']).first().to_dict()['id']
-  baseCurrencyName = tradeData['baseName']
-
-  quoteCurrencyId = SingleCurrency.query.filter(
-      SingleCurrency.name == tradeData['quoteName']).first().to_dict()['id']
-  quoteCurrencyName = tradeData['quoteName']
-
-  #! the api I was using  now requires an apikey that grants very few api calls, while I search for a new api/creating an account, I am using a single static rate for all currencies.
-  quoteQuantity = c.convert(
-      f'{baseCurrencyName}', f'{quoteCurrencyName}', baseQuantity)
-  print('---------------------------', quoteQuantity)
-  # quoteQuantity = (1/.8)*baseQuantity
-
-  uniqueTradeId = uuid.uuid1()
+    uniqueTradeId = uuid.uuid1()
 
 
 
 
-  if makerDirection == 'offer':
-    takerDirection = 'bid'
-    #Subtract trade quantity from the balance of maker
-    makerBaseBalance = UserBalance.query.filter(and_(
-        UserBalance.userId == makerId, UserBalance.currencyId == baseCurrencyId)).first()
+    if makerDirection == 'offer':
+      takerDirection = 'bid'
+      #Subtract trade quantity from the balance of maker
+      makerBaseBalance = UserBalance.query.filter(and_(
+          UserBalance.userId == makerId, UserBalance.currencyId == baseCurrencyId)).first()
 
-    makerQuoteBalance = UserBalance.query.filter(and_(
-        UserBalance.userId == makerId, UserBalance.currencyId == quoteCurrencyId)).first()
+      makerQuoteBalance = UserBalance.query.filter(and_(
+          UserBalance.userId == makerId, UserBalance.currencyId == quoteCurrencyId)).first()
 
-    makerBaseBalance.quantity = makerBaseBalance.quantity - baseQuantity
-    makerQuoteBalance.quantity = makerQuoteBalance.quantity + quoteQuantity
-    #Add trade quantity to the balance of taker
-    takerBaseBalance = UserBalance.query.filter(and_(
-        UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()
+      makerBaseBalance.quantity = makerBaseBalance.quantity - baseQuantity
+      makerQuoteBalance.quantity = makerQuoteBalance.quantity + quoteQuantity
+      #Add trade quantity to the balance of taker
+      takerBaseBalance = UserBalance.query.filter(and_(
+          UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()
 
-    takerQuoteBalance = UserBalance.query.filter(and_(UserBalance.userId == takerId, UserBalance.currencyId == quoteCurrencyId)).first()
+      takerQuoteBalance = UserBalance.query.filter(and_(UserBalance.userId == takerId, UserBalance.currencyId == quoteCurrencyId)).first()
 
-    takerBaseBalance.quantity = takerBaseBalance.quantity + baseQuantity
-    takerQuoteBalance.quantity = takerQuoteBalance.quantity - quoteQuantity
-    # commit both changes to the user Balance
-    db.session.commit()
+      takerBaseBalance.quantity = takerBaseBalance.quantity + baseQuantity
+      takerQuoteBalance.quantity = takerQuoteBalance.quantity - quoteQuantity
+      # commit both changes to the user Balance
+      db.session.commit()
 
-    #Create new trades for both the maker and taker
-    makerTrade = Trade(
-      makerCurrencyId=makerCurrencyId,
-      takerCurrencyId=takerCurrencyId,
-      quantity=quoteQuantity,
-      bidOrOffer=makerDirection,
-      price=price,
-      postId=postId,
-      created_on=date,
-      traderId = makerId,
-      uniqueTradeId=uniqueTradeId
-    )
-
-    takerTrade = Trade(
-      makerCurrencyId=makerCurrencyId,
-      takerCurrencyId=takerCurrencyId,
-      quantity=baseQuantity,
-      bidOrOffer=takerDirection,
-      price=price,
-      postId=postId,
-      created_on=date,
-      traderId = takerId,
-      uniqueTradeId=uniqueTradeId
-    )
-    db.session.add_all([makerTrade, takerTrade])
-    db.session.commit()
-
-  else:
-    takerDirection = 'offer'
-
-    #Subtract trade quantity from the balance of maker
-    makerBaseBalance = UserBalance.query.filter(and_(
-        UserBalance.userId == makerId, UserBalance.currencyId == baseCurrencyId)).first()
-
-    makerQuoteBalance = UserBalance.query.filter(and_(
-        UserBalance.userId == makerId, UserBalance.currencyId == quoteCurrencyId)).first()
-
-    makerBaseBalance.quantity = makerBaseBalance.quantity + baseQuantity
-    makerQuoteBalance.quantity = makerQuoteBalance.quantity - quoteQuantity
-    #Add trade quantity to the balance of taker
-    takerBaseBalance = UserBalance.query.filter(and_(
-        UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()
-
-    takerQuoteBalance = UserBalance.query.filter(and_(
-        UserBalance.userId == takerId, UserBalance.currencyId == quoteCurrencyId)).first()
-
-    takerBaseBalance.quantity = takerBaseBalance.quantity - baseQuantity
-    takerQuoteBalance.quantity = takerQuoteBalance.quantity + quoteQuantity
-    # commit both changes to the user Balance
-    db.session.commit()
-
-    #Create new trades for both the maker and taker
-    makerTrade = Trade(
+      #Create new trades for both the maker and taker
+      makerTrade = Trade(
         makerCurrencyId=makerCurrencyId,
         takerCurrencyId=takerCurrencyId,
-        quantity=baseQuantity,
+        quantity=quoteQuantity,
         bidOrOffer=makerDirection,
         price=price,
         postId=postId,
         created_on=date,
-        traderId=makerId,
+        traderId = makerId,
         uniqueTradeId=uniqueTradeId
-    )
+      )
 
-    takerTrade = Trade(
+      takerTrade = Trade(
         makerCurrencyId=makerCurrencyId,
         takerCurrencyId=takerCurrencyId,
         quantity=baseQuantity,
@@ -182,18 +124,70 @@ def newTrade():
         price=price,
         postId=postId,
         created_on=date,
-        traderId=takerId,
+        traderId = takerId,
         uniqueTradeId=uniqueTradeId
-    )
-    db.session.add_all([makerTrade, takerTrade])
-    db.session.commit()
+      )
+      db.session.add_all([makerTrade, takerTrade])
+      db.session.commit()
+
+    else:
+      takerDirection = 'offer'
+
+      #Subtract trade quantity from the balance of maker
+      makerBaseBalance = UserBalance.query.filter(and_(
+          UserBalance.userId == makerId, UserBalance.currencyId == baseCurrencyId)).first()
+
+      makerQuoteBalance = UserBalance.query.filter(and_(
+          UserBalance.userId == makerId, UserBalance.currencyId == quoteCurrencyId)).first()
+
+      makerBaseBalance.quantity = makerBaseBalance.quantity + baseQuantity
+      makerQuoteBalance.quantity = makerQuoteBalance.quantity - quoteQuantity
+      #Add trade quantity to the balance of taker
+      takerBaseBalance = UserBalance.query.filter(and_(
+          UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()
+
+      takerQuoteBalance = UserBalance.query.filter(and_(
+          UserBalance.userId == takerId, UserBalance.currencyId == quoteCurrencyId)).first()
+
+      takerBaseBalance.quantity = takerBaseBalance.quantity - baseQuantity
+      takerQuoteBalance.quantity = takerQuoteBalance.quantity + quoteQuantity
+      # commit both changes to the user Balance
+      db.session.commit()
+
+      #Create new trades for both the maker and taker
+      makerTrade = Trade(
+          makerCurrencyId=makerCurrencyId,
+          takerCurrencyId=takerCurrencyId,
+          quantity=baseQuantity,
+          bidOrOffer=makerDirection,
+          price=price,
+          postId=postId,
+          created_on=date,
+          traderId=makerId,
+          uniqueTradeId=uniqueTradeId
+      )
+
+      takerTrade = Trade(
+          makerCurrencyId=makerCurrencyId,
+          takerCurrencyId=takerCurrencyId,
+          quantity=baseQuantity,
+          bidOrOffer=takerDirection,
+          price=price,
+          postId=postId,
+          created_on=date,
+          traderId=takerId,
+          uniqueTradeId=uniqueTradeId
+      )
+      db.session.add_all([makerTrade, takerTrade])
+      db.session.commit()
+      return {'response': 'success'}
+  except:
+    return {'response': 'failed'}
 
 
 
 
 
-
-  return {'success': ''}
 
 
   #todo  create new trades for each user (how to account for both sides relating to eachother, add a unique trade serial key to link offsetting sides with a uuid?), check if the total quantity would put the Posters desired trade value to 0, if so, set the Post.live to False, else leave it true

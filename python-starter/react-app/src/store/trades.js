@@ -22,18 +22,16 @@ export const getTradesThunk = () => async (dispatch) => {
 }
 
 export const newTradeThunk = (newTrade) => async (dispatch) => {
-  await fetch("/api/trade/newTrade", {
+  let data = await fetch("/api/trade/newTrade", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newTrade),
   });
-  // const response = await data.json()
+  const response = await data.json()
 
-  // const response = await data.json()
-  // dispatch(newTrade(response))
-  return
+  return response
 }
 
 

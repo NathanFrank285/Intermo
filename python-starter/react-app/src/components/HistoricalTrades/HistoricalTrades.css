@@ -1,3 +1,9 @@
 .tradeHistory{
-  margin: 0px;
+margin: 0px;
+}
+
+.historicalTrades{
+  margin-bottom: 15vh;
+  /* overflow-y: scroll; */
+
 }
