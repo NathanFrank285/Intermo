@@ -38,6 +38,7 @@ export const newPostThunk = (newPost) => async (dispatch) => {
   });
   const data = await response.json()
   console.log(data)
+  return data
 }
 
 let initialState = {}

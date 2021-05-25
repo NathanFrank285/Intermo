@@ -1,15 +1,10 @@
 import React from "react";
+import './Footer.css'
 
 function Footer() {
   return (
     <div
-      style={{
-        width: "100%",
-        height: "10vh",
-        marginTop: "30px",
-        display: "flex",
-        flexDirection: "column",
-      }}
+      className='footer-container'
     >
       {/* <img
         style={{ height: "10vh", width: "100px", borderRadius: "20px" }}
