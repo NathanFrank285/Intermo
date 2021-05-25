@@ -29,7 +29,7 @@ export const newTradeThunk = (newTrade) => async (dispatch) => {
     },
     body: JSON.stringify(newTrade),
   });
-  const response = await data.json()
+  let response = await data.json()
 
   return response
 }

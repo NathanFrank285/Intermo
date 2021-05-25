@@ -1,9 +1,11 @@
 from flask import Blueprint
 from flask_login import current_user, login_required
 from app.models import Currency
-from forex_python.converter import CurrencyRates
+# from forex_python.converter import CurrencyRates
 
-c = CurrencyRates()
+# c = CurrencyRates()
+from currency_converter import CurrencyConverter
+c = CurrencyConverter()
 
 
 currencyRoutes = Blueprint('currency', __name__)
@@ -12,9 +14,10 @@ currencyRoutes = Blueprint('currency', __name__)
 @login_required
 def getCurrency(base, quote):
   id = current_user.id
-  # rate =  c.get_rate(f'{base}', f'{quote}')
+  rate =  c.convert(1,f'{base}', f'{quote}')
   # rate = c.get_rate('EUR', 'USD')
-  rate = 1.2
+  # rate = 1.2
+  print('I am the current rate--------------', rate)
 
   return {'rate': rate}
 
