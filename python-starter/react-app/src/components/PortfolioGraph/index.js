@@ -31,7 +31,7 @@ function PortfolioGraph() {
 
   return (
     <div>
-      <h2 id="portfolioMakeup">Current Portfolio</h2>
+      <h2 id="portfolioMakeup">Current Account Balances</h2>
       <div className="pieChart">
         {userBalance && (
           <ResponsiveContainer minWidth="250px" minHeight="250px">
