@@ -3,17 +3,21 @@
   grid-template-columns: 50% 50%;
   grid-template-rows: 150px 80%;
   grid-template-areas:
-  'searchBar .'
+  'searchBar searchBar'
   'trades portfolio'
   ;
 }
 
 .formContainer{
   margin-bottom: 10px;
+  grid-area: 1/1/2/3;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
 }
 
 .searchBar{
-  grid-area: searchBar;
   margin: 10px;
   margin-bottom: 25px;
   grid-column: 1/3;
@@ -21,11 +25,15 @@
 
 .historicalTrades{
   grid-area: trades;
-  
+  border-top: 1px solid black;
+
 }
 
 .portfolioAllocation{
   grid-area: portfolio;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+
 }
 
 .buySellButtonContainer{

@@ -30,7 +30,7 @@ function PortfolioGraph() {
   };
 
   return (
-    <div>
+    <div className="portfolioMakeup-container">
       <h2 id="portfolioMakeup">Current Account Balances</h2>
       <div className="pieChart">
         {userBalance && (
