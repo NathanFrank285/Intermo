@@ -56,7 +56,7 @@ def postPosts():
   db.session.commit()
   # use the request object from flask to access the body of post request
 
-  return {'success': 'test'}
+  return {'response': 'success'}
 
 @postRoutes.route('/<postId>', methods=['DELETE'])
 @login_required

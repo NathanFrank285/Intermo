@@ -4,6 +4,7 @@ Express & React clone based on Venmo that allows to exchange international curre
 
 ## Technology Used
 
+* Python
 * JavaScript
 * React
 * Redux
