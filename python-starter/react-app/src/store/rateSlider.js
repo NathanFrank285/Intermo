@@ -7,18 +7,17 @@ const getMarketRates = () => {
   };
 };
 
-export const getMarketRatesThunk = (currencyPair) => async (dispatch) => {
-  // const pairArray = currencyPair.split("/");
-  // const base = pairArray[0];
-  // const quote = pairArray[1];
-  // const data = await fetch(`/api/currency/${base}/${quote}`);
+export const getMarketRatesThunk = () => async (dispatch) => {
+
+  const data = await fetch(`/api/currency/MarketRates`);
   // const response = await data.json();
-  // dispatch(getRate(response));
-  // return;
+  // console.log(response);
+  // dispatch(getMarketRates(response));
+  return;
 };
 
 let initialState = {};
-const currentRate = (state = initialState, action) => {
+const marketRates = (state = initialState, action) => {
   switch (action.type) {
     case GET_MARKET_RATES:
       return { ...action.fxRate };
@@ -26,4 +25,4 @@ const currentRate = (state = initialState, action) => {
       return state;
   }
 };
-export default currentRate;
+export default marketRates;
