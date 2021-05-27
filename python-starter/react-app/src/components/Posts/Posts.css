@@ -19,6 +19,16 @@ justify-content: space-evenly;
 
 }
 
+.form-button{
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  color: #018ffe;
+  font-weight: 800;
+  font-size: large;
+}
+
 .postElement{
 width: 80%;
 background-color:none;
