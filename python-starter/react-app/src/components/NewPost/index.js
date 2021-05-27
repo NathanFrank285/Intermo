@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {newPostThunk} from '../../store/posts'
 import { getCurrenciesThunk } from "../../store/pairs";
+import ExchangeRates from "../ExchangeRates";
 import { store } from "react-notifications-component";
 import "./NewPost.css";
 
@@ -69,7 +70,7 @@ function NewPost() {
 
   return (
     <>
-      <div>Current exchange rate is: </div>
+      <ExchangeRates/>
       <div className="newPost-Container">
         <form className="form-container" onSubmit={(e) => submitPost(e)}>
         <h3>Create a new Post!</h3>
