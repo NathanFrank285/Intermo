@@ -1,11 +1,11 @@
 const GET_MARKET_RATES = "currentRate/GET_MARKET_RATES";
 
-const getMarketRates = () => {
-  return {
-    type: GET_MARKET_RATES,
-    marketRates,
-  };
-};
+// const getMarketRates = (marketRates) => {
+//   return {
+//     type: GET_MARKET_RATES,
+//     marketRates,
+//   };
+// };
 
 export const getMarketRatesThunk = () => async (dispatch) => {
 

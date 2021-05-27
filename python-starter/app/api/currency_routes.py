@@ -24,7 +24,6 @@ def getCurrency(base, quote):
 @currencyRoutes.route('')
 def getCurrencies():
 
-#todo grab all of the currency pairs from the db, split them, find the the current rate, and 24 hour change, add into a dict, send back and put into slider on the dashboard
   output = Currency.query.all()
   pairs = []
   for pair in output:

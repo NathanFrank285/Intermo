@@ -6,7 +6,7 @@ import { getCurrenciesThunk } from '../../store/pairs';
 import HistoricalTrades from '../HistoricalTrades'
 import PortfolioGraph from '../PortfolioGraph'
 import "./Dashboard.css";
-import CurrentRateSlider from "../CurrentRateSlider";
+// import CurrentRateSlider from "../CurrentRateSlider";
 
 // todo create the search bar with buy and sell buttons below, the trade history table on the bottom left and the portfolio allocation graph on the right
 
@@ -36,7 +36,7 @@ function Dashboard() {
 
   return (
     <div>
-      <CurrentRateSlider/>
+      {/* <CurrentRateSlider/> */}
       <div className="title-container">
         <h2 className="dashboardTitle">
           Welcome to Intermo! The only community driven place to exchange
@@ -81,9 +81,9 @@ function Dashboard() {
               <option value="offer">Sell</option>
             </select>
             <br></br>
-            <button type="submit"
-            className="form-button"
-            >Search</button>
+            <button type="submit" className="form-button">
+              Search
+            </button>
           </div>
         </form>
 
@@ -97,9 +97,9 @@ function Dashboard() {
             </div>{" "}
           </>
         ) : (
-          <div className="historicalTrades">
-            <NavLink to="/login">
-              Please login to view past trades and current balance
+          <div className="loginLink">
+            <NavLink className="loginLink-link" to="/login">
+              Please login to view past trades and current balances
             </NavLink>
           </div>
         )}
