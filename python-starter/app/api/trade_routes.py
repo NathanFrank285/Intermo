@@ -2,13 +2,16 @@ from flask import Blueprint, request
 from flask_login import current_user, login_required
 from app.models import db, Trade, Currency, UserBalance, SingleCurrency
 from sqlalchemy import and_, or_
-from forex_python.converter import CurrencyRates
+# from forex_python.converter import CurrencyRates
+from currency_converter import CurrencyConverter
+c = CurrencyConverter()
 import uuid
 import os
-print('---------------------------',os.environ['EXCHANGE_API'])
+# print('---------------------------',os.environ['EXCHANGE_API'])
 
 
-c = CurrencyRates('b3a198b8edb0e1f3a990f194d741fadf')
+
+# c = CurrencyRates('b3a198b8edb0e1f3a990f194d741fadf')
 
 
 tradeRoutes = Blueprint('trade', __name__)
@@ -71,10 +74,11 @@ def newTrade():
     quoteCurrencyName = tradeData['quoteName']
 
     #! the api I was using  now requires an apikey that grants very few api calls, while I search for a new api/creating an account, I am using a single static rate for all currencies.
-    quoteQuantity = c.convert(
-        f'{baseCurrencyName}', f'{quoteCurrencyName}', baseQuantity)
-    # print('---------------------------', quoteQuantity)
-    # quoteQuantity = (1/.8)*baseQuantity
+    # quoteQuantity = c.convert(
+    #     baseQuantity, f'{baseCurrencyName}', f'{quoteCurrencyName}')
+    quoteQuantity = price*baseQuantity
+    print('---------------------------I am the quote quant', quoteQuantity)
+
 
     uniqueTradeId = uuid.uuid1()
 
@@ -129,7 +133,7 @@ def newTrade():
       )
       db.session.add_all([makerTrade, takerTrade])
       db.session.commit()
-
+      return {'response': 'success'}
     else:
       takerDirection = 'offer'
 
@@ -181,6 +185,7 @@ def newTrade():
       db.session.add_all([makerTrade, takerTrade])
       db.session.commit()
       return {'response': 'success'}
+
   except:
     return {'response': 'failed'}
 

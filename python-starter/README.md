@@ -90,10 +90,10 @@ This is the backend for the Flask React project.
 
    ```bash
    heroku run -a intermo flask db upgrade
+   heroku run -a intermo flask seed undo
    heroku run -a intermo flask seed all
    ```
 
 10. Under Settings find "Config Vars" and add any additional/secret .env variables.
 
 11. profit
-

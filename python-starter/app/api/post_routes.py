@@ -5,6 +5,8 @@ from sqlalchemy import and_
 # from forex_python.converter import CurrencyRates
 
 # c = CurrencyRates()
+from currency_converter import CurrencyConverter
+c = CurrencyConverter()
 
 
 postRoutes = Blueprint('post', __name__)

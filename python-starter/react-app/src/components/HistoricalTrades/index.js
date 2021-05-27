@@ -38,7 +38,7 @@ function HistoricalTrades() {
   })
 
   return (
-    <>
+    <div className="tradeHistory-container">
       <h2 className="tradeHistory">Trade history</h2>
       <table>
         <tbody>
@@ -54,7 +54,7 @@ function HistoricalTrades() {
             : "No trade data available"}
         </tbody>
       </table>
-    </>
+    </div>
   );
 
 }
