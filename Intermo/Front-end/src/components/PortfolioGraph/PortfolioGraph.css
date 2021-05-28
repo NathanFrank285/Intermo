@@ -1,0 +1,16 @@
+.portfolioMakeup-container{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+#portfolioMakeup {
+  margin: 10px;
+}
+
+.pieChart{
+  width: 100%;
+  height: auto;
+
+}
