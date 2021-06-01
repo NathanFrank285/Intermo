@@ -1,0 +1,71 @@
+.navbar-container{
+  height: 20%;
+  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: 15% auto 15%;
+  /* grid-template-rows: 10%; */
+  grid-template-areas:
+  "l post forms";
+  border-bottom: 1px solid;
+  background-color: #DFE0E2;
+}
+
+.logo--img{
+  width: 100%;
+  height: auto;
+  background-color: #DFE0E2;
+}
+
+.logo{
+  grid-area: l;
+  background-color: #DFE0E2;
+}
+
+.forms{
+  background-color: #DFE0E2;
+  grid-area: forms;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.userForms{
+  padding: 2px;
+  margin: 1px;
+  background-color: #DFE0E2;
+}
+
+.authBubble{
+  text-decoration: none;
+  color: #018ffe;
+  font-weight: 800;
+  font-size: 1.75vw;
+  cursor: pointer;
+  border: none;
+  background-color: #DFE0E2;
+}
+
+.newPost-container{
+
+  grid-area: post;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.newPost-button{
+  text-decoration: none;
+  color: #018ffe;
+  font-weight: 800;
+  font-size: 1.75vw;
+  cursor: pointer;
+  border: none;
+  background-color: #DFE0E2;
+}
+
+.authBubble:active{
+  color: green;
+  background-color: #DFE0E2;
+}
