@@ -66,6 +66,6 @@
 }
 
 .authBubble:active{
-  color: green;
+  color: black;
   background-color: #DFE0E2;
 }

@@ -25,7 +25,11 @@ const NavBar = () => {
         </NavLink>
       </div>
       <div className="newPost-container">
-        <NavLink to="/newPost" exact={true} className="newPost-button">
+        <NavLink
+          to="/newPost"
+          exact={true}
+          className="newPost-button authBubble"
+        >
           Create a Post
         </NavLink>
       </div>
