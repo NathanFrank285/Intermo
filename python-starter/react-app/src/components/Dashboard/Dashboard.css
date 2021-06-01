@@ -3,6 +3,7 @@
   justify-content: center;
   /* position: absolute; */
   /* left: 50%; */
+  box-shadow: inset 0px 1px 0px 0px rgb(0 0 0 / 5%), inset 0px 2px 3px 0px rgb(0 0 0 / 10%);
 }
 .dashboardTitle{
  margin: 2px;
