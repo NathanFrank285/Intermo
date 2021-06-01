@@ -1,6 +1,7 @@
-# Venmo-Clone-Solo-Project
+# Intermo
 
-Express & React clone based on Venmo that allows to exchange international currencies. All work was completed on my own.
+## Project Overview
+<a href='https://intermo.herokuapp.com/' target='_blank'> Intermo</a> is a P2P foreign exchange platform and avoid unnecessary bank fees.  All work was completed on my own.
 
 ## Technology Used
 
