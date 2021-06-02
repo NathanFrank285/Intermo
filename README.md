@@ -19,19 +19,19 @@
 
 1. Clone project
 
-2. Generate a .env file inside the python-starter directory and SESSION_SECRET variable into it
+2. Generate a .env file inside the Intermo directory and add a SESSION_SECRET variable into it
 
-3. cd into the python-starter folder and start your python shell, and start flask
+3. cd into the Intermo folder and start your python shell, and start flask
 
 ```bash
-  cd python-starter
+  cd Intermo
   pipenv shell flask run
 ```
 
-4. Open up a second terminal and cd into the react-app folder and start the react app and enjoy!
+4. Open up a second terminal and cd into the Front-end directory, start the react app, and enjoy!
 
 ```bash
-  cd python-starter/react-app
+  cd Intermo/Front-end
   npm start
 
 ```
