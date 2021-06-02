@@ -10,8 +10,8 @@
 * React
 * Redux
 * forex_python exchange rate API
-* Node.js
-* Sequelize
+* Flask
+* SQLAlchemy
 * HTML
 * CSS
 
