@@ -17,10 +17,13 @@
 
 .legend-container{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
+  flex-direction: row;
+  justify-content: center;
+  margin: 20px;
   font-size: large;
   border-top: 1px solid black;
+}
 
+.legend-item{
+  margin: 15px;
 }
