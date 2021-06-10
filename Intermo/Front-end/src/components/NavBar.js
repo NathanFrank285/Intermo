@@ -25,13 +25,29 @@ const NavBar = () => {
         </NavLink>
       </div>
       <div className="newPost-container">
-        {user ? <NavLink
-          to="/newPost"
+        {user ? (
+          <NavLink
+            to="/newPost"
+            exact={true}
+            className="newPost-button authBubble"
+          >
+            Create an Offer
+          </NavLink>
+        ) : null}
+        <NavLink
+          to="/viewOffers"
           exact={true}
-          className="newPost-button authBubble"
+          className="viewOffers-button newPost-button authBubble"
         >
-          Create an Offer
-        </NavLink> : null}
+          View the Market
+        </NavLink>
+        <NavLink
+          to="/AboutInterMo"
+          exact={true}
+          className="aboutInterMo-button newPost-button authBubble"
+        >
+          What is Intermo?
+        </NavLink>
       </div>
       {!user && !user ? (
         <div className="forms">

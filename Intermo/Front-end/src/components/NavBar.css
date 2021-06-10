@@ -2,7 +2,7 @@
   height: 20%;
   margin-bottom: 15px;
   display: grid;
-  grid-template-columns: 15% auto 30%;
+  grid-template-columns: 15% auto 15%;
   /* grid-template-rows: 10%; */
   grid-template-areas:
   "l post forms";
@@ -25,7 +25,7 @@
   background-color: #DFE0E2;
   grid-area: forms;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
@@ -40,7 +40,7 @@
   text-decoration: none;
   color: #018ffe;
   font-weight: 800;
-  font-size: 1.75vmax;
+  font-size: 1.5vmax;
   cursor: pointer;
   border: none;
   background-color: #DFE0E2;
