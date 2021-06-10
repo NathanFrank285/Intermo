@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { getUserBalanceThunk } from '../../store/userBalance';
 import { useDispatch, useSelector } from "react-redux";
-import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell, Legend } from "recharts";
 import './PortfolioGraph.css'
 
 function PortfolioGraph() {
@@ -27,6 +27,25 @@ function PortfolioGraph() {
     }
 
     return null;
+  };
+
+  const renderLegend = (props) => {
+    const { payload } = props;
+    console.log(props)
+
+    return (
+      <div className="legend-container">
+        {payload.map((entry, index) => (
+          <div
+            className="legend-item"
+            style={{ fontColor: `${entry.payload.color}` }}
+            key={`item-${index}`}
+          >
+            {entry.payload.currencyId}: {entry.payload.quantity}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -57,6 +76,7 @@ function PortfolioGraph() {
                   />
                 ))}
               </Pie>
+              <Legend content={renderLegend} verticalAlign="bottom" height={36} />
               <Tooltip content={<CustomTooltip />} />
             </PieChart>
           </ResponsiveContainer>

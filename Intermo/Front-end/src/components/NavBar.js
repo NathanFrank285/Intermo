@@ -25,13 +25,13 @@ const NavBar = () => {
         </NavLink>
       </div>
       <div className="newPost-container">
-        <NavLink
+        {user ? <NavLink
           to="/newPost"
           exact={true}
           className="newPost-button authBubble"
         >
-          Create a Post
-        </NavLink>
+          Create an Offer
+        </NavLink> : null}
       </div>
       {!user && !user ? (
         <div className="forms">
