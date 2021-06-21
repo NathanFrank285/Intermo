@@ -1,8 +1,13 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { useDispatch } from "react-redux";
 import './ViewTheMarket.css'
 
 function ViewTheMarket() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // dispatch(getAllOffers())
+  },[])
 
 
   return (
