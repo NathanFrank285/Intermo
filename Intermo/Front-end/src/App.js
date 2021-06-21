@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch} from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { authenticate } from "./store/session";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import Dashboard from "./components/Dashboard";
 import Posts from "./components/Posts";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import NewPost from "./components/NewPost";
+import Footer from "./components/Footer";
+import ViewTheMarket from "./components/ViewTheMarket";
+import AboutIntermo from "./components/AboutIntermo";
 // import UsersList from "./components/UsersList";
 // import User from "./components/User";
 // import { authenticate } from "./services/auth";
-import { authenticate } from "./store/session";
-import NewPost from "./components/NewPost";
-import Footer from "./components/Footer";
 
 function App() {
   // const [authenticated, setAuthenticated] = useState(false);
@@ -40,6 +42,12 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
+        <Route path="/viewTheMarket" exact={true}>
+          <ViewTheMarket/>
+        </Route>
+        <Route path="/aboutInterMo" exact={true}>
+          <AboutIntermo/>
+        </Route>
         {/* <ProtectedRoute path="/users" exact={true} >
           <UsersList/>
         </ProtectedRoute> */}
@@ -53,10 +61,10 @@ function App() {
           <Posts />
         </ProtectedRoute>
         <ProtectedRoute path="/newPost" exact={true}>
-          <NewPost/>
+          <NewPost />
         </ProtectedRoute>
       </Switch>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   );
 }

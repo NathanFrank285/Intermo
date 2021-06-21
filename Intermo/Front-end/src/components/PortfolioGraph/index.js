@@ -31,14 +31,14 @@ function PortfolioGraph() {
 
   const renderLegend = (props) => {
     const { payload } = props;
-    console.log(props)
+    console.log(payload[0].color)
 
     return (
       <div className="legend-container">
         {payload.map((entry, index) => (
           <div
             className="legend-item"
-            style={{ fontColor: `${entry.payload.color}` }}
+            style={{ color: `${entry.color}` }}
             key={`item-${index}`}
           >
             {entry.payload.currencyId}: {entry.payload.quantity}
