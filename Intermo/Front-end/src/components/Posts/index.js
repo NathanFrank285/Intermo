@@ -94,25 +94,34 @@ const submitTrade = async (date, postedCurrencyId, makerDirection, price, quanti
                   <div className="postElement">{post[1].name}</div>
                   <div className="postElement">Posted on {date}</div>
                   <div className="postElement">
-                    {post[1].bidOrOffer} is at {post[1].price}
+                    {post[1].bidOrOffer.charAt().toUpperCase() +
+                      post[1].bidOrOffer.slice(1)}{" "}
+                    is at {post[1].price}
                   </div>
-                  <div className="postElement">Quantity: {post[1].quantity}</div>
-                  <button className="tradeButton form-button"
-                  onClick={()=>{submitTrade(
-                    new Date(),
-                    post[1].postedCurrencyId,
-                    post[1].bidOrOffer,
-                    post[1].price,
-                    post[1].quantity,
-                    post[1].userId,
-                    post[1].id,
-                  )}}
-                  >Trade</button>
+                  <div className="postElement">
+                    Quantity: {post[1].quantity}
+                  </div>
+                  <button
+                    className="tradeButton form-button"
+                    onClick={() => {
+                      submitTrade(
+                        new Date(),
+                        post[1].postedCurrencyId,
+                        post[1].bidOrOffer,
+                        post[1].price,
+                        post[1].quantity,
+                        post[1].userId,
+                        post[1].id
+                      );
+                    }}
+                  >
+                    Trade
+                  </button>
                 </div>
               );})
           ) : (
             <NavLink to='/'>
-              <div>No trade posts available, try revising your search</div>
+              <div>No trade offers available, try searching for a lower quantity or creating an offer</div>
             </NavLink>
           )}
         </div>
