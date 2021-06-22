@@ -2,10 +2,18 @@ import {saveSearch} from './search'
 import {getCurrentRateThunk} from './currentRate'
 
 const GET_POSTS = 'posts/GET_POSTS'
+const GET_ALL_POSTS = 'posts/GET_ALL_POSTS'
 
 const getPosts = (searchResults) => {
   return {
     type: GET_POSTS,
+    searchResults
+  }
+}
+
+const getAllPosts = (searchResults) => {
+  return {
+    type: GET_ALL_POSTS,
     searchResults
   }
 }
@@ -26,6 +34,11 @@ export const getPostsThunk = (searchData) => async (dispatch) => {
   dispatch(saveSearch(searchData))
   dispatch(getCurrentRateThunk(pair));
   return
+}
+
+//? thunk to show market wide offers when wanting to see the market
+export const getAllOffersThunk = (searchData) => async (dispatch) => {
+
 }
 
 export const newPostThunk = (newPost) => async (dispatch) => {
