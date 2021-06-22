@@ -11,10 +11,10 @@ const getPosts = (searchResults) => {
   }
 }
 
-const getAllPosts = (searchResults) => {
+const getAllPosts = (allPosts) => {
   return {
     type: GET_ALL_POSTS,
-    searchResults
+    allPosts
   }
 }
 
@@ -37,8 +37,12 @@ export const getPostsThunk = (searchData) => async (dispatch) => {
 }
 
 //? thunk to show market wide offers when wanting to see the market
-export const getAllOffersThunk = (searchData) => async (dispatch) => {
-
+export const getAllOffersThunk = () => async (dispatch) => {
+  const data = await fetch(
+    `/api/post/${base}/${quote}/${quantity}/${direction}`
+  );
+  const response = await data.json();
+  dispatch(getAllPosts(response));
 }
 
 export const newPostThunk = (newPost) => async (dispatch) => {
