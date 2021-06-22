@@ -1,12 +1,17 @@
 import React,{useEffect} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrenciesThunk } from "../../store/pairs";
+import { getAllOffersThunk } from "../../store/posts";
+
 import './ViewTheMarket.css'
 
 function ViewTheMarket() {
   const dispatch = useDispatch();
+  const allPairs = useSelector(state => state?.posts?.posts)
 
   useEffect(() => {
-    // dispatch(getAllOffers())
+    dispatch(getAllOffersThunk())
+    dispatch(getCurrenciesThunk());
   },[])
 
 

@@ -38,10 +38,9 @@ export const getPostsThunk = (searchData) => async (dispatch) => {
 
 //? thunk to show market wide offers when wanting to see the market
 export const getAllOffersThunk = () => async (dispatch) => {
-  const data = await fetch(
-    `/api/post/${base}/${quote}/${quantity}/${direction}`
-  );
+  const data = await fetch(`/api/post/marketOverview`);
   const response = await data.json();
+  console.log(response);
   dispatch(getAllPosts(response));
 }
 
@@ -62,6 +61,8 @@ const posts = (state=initialState, action) => {
   switch (action.type) {
     case GET_POSTS:
       return {...action.searchResults}
+    case GET_ALL_POSTS:
+      return {...action.allPosts}
     default:
       return state
   }
