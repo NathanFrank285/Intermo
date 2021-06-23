@@ -2,11 +2,19 @@ import {saveSearch} from './search'
 import {getCurrentRateThunk} from './currentRate'
 
 const GET_POSTS = 'posts/GET_POSTS'
+const GET_ALL_POSTS = 'posts/GET_ALL_POSTS'
 
 const getPosts = (searchResults) => {
   return {
     type: GET_POSTS,
     searchResults
+  }
+}
+
+const getAllPosts = (allPosts) => {
+  return {
+    type: GET_ALL_POSTS,
+    allPosts
   }
 }
 
@@ -28,6 +36,14 @@ export const getPostsThunk = (searchData) => async (dispatch) => {
   return
 }
 
+//? thunk to show market wide offers when wanting to see the market
+export const getAllOffersThunk = () => async (dispatch) => {
+  const data = await fetch(`/api/post/marketOverview`);
+  const response = await data.json();
+  console.log(response);
+  dispatch(getAllPosts(response));
+}
+
 export const newPostThunk = (newPost) => async (dispatch) => {
   const response = await fetch("/api/post/new", {
     method: "POST",
@@ -45,6 +61,8 @@ const posts = (state=initialState, action) => {
   switch (action.type) {
     case GET_POSTS:
       return {...action.searchResults}
+    case GET_ALL_POSTS:
+      return {...action.allPosts}
     default:
       return state
   }

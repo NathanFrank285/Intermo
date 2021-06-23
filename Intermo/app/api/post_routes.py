@@ -11,6 +11,18 @@ c = CurrencyConverter()
 
 postRoutes = Blueprint('post', __name__)
 
+def postsDict(posts, pairName):
+  output = {}
+  count = 0
+  for post in posts:
+    postDict = post.to_dict()
+    if (pairName):
+      postDict['name'] = pairName['name']
+    output[count] = postDict
+    count += 1
+  return output
+
+
 @postRoutes.route('/<base>/<quote>/<quantity>/<direction>')
 @login_required
 def getPosts(base, quote, quantity, direction):
@@ -23,7 +35,7 @@ def getPosts(base, quote, quantity, direction):
   #search for all posts that match the currency pair, opposite direction of the search, and are greater than or equal to the searched quantity
   posts = Post.query.filter(and_(Post.postedCurrencyId == pairName['id']), Post.bidOrOffer != direction, Post.quantity >= quantity, Post.userId != id).join(User).all()
   # todo the user object is being added to the posts variable, need to find a way to add this to the dict function so it can be sent to redux
-
+  output = postsDict(posts, pairName)
   output = {}
   count = 0
   for post in posts:
@@ -31,12 +43,19 @@ def getPosts(base, quote, quantity, direction):
     postDict['name'] = pairName['name']
     output[count] = postDict
     count += 1
-  # output['search'] = [base, quantity, direction]
 
   return output
 
+@postRoutes.route('/marketOverview')
+@login_required
+def marketOverview():
+  posts = Post.query.all()
+  output = postsDict(posts, False)
+  
 
-# {'pair': '1', 'quantity': '5', 'price': '5', 'direction': 'bid'}
+  print(output, '--------------------------------------------------------')
+  return {'posts': output}
+
 @postRoutes.route('/new', methods=['POST'])
 @login_required
 def postPosts():
