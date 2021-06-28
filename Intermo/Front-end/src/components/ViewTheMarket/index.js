@@ -8,6 +8,7 @@ import './ViewTheMarket.css'
 function ViewTheMarket() {
   const dispatch = useDispatch();
   const allPairs = useSelector(state => state?.posts?.posts)
+  
 
   useEffect(() => {
     dispatch(getAllOffersThunk())
