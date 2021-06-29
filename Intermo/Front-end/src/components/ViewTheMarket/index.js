@@ -7,13 +7,30 @@ import './ViewTheMarket.css'
 
 function ViewTheMarket() {
   const dispatch = useDispatch();
-  const allPairs = useSelector(state => state?.posts?.posts)
-  
+  let posts = useSelector(state => state?.posts?.posts)
+  let pairs = useSelector(state => state?.pairs)
+
 
   useEffect(() => {
     dispatch(getAllOffersThunk())
     dispatch(getCurrenciesThunk());
   },[])
+
+  let numberOfPosts;
+  let postValues;
+  let pairsObject = {}
+
+
+  if (posts && pairs) {
+    numberOfPosts = Object.entries(posts).length;
+    let postArray = Object.entries(posts);
+
+
+    for (let [id, value] of postArray) {
+      console.log(id, value);
+      // let postPairId = value['id']
+    }
+   }
 
 
   return (
