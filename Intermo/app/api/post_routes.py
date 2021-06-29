@@ -51,9 +51,8 @@ def getPosts(base, quote, quantity, direction):
 def marketOverview():
   posts = Post.query.all()
   output = postsDict(posts, False)
-  
 
-  print(output, '--------------------------------------------------------')
+
   return {'posts': output}
 
 @postRoutes.route('/new', methods=['POST'])
@@ -70,7 +69,6 @@ def postPosts():
     bidOrOffer=postData['direction'],
     live=False
   )
-  print(newPost)
   # post = Post.query.filter(Post.userId == id).first()
 
   db.session.add(newPost)

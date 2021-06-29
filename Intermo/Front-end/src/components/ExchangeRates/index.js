@@ -11,12 +11,12 @@ function ExchangeRates() {
   },[])
 
   return (
-    <>
+    <div className="currentRate-container">
       {currentRate && (
-      <p>The current exchange rate is {currentRate}. Make sure that you choose a rate that is close to the current price.</p>
+      <p className="currentRate">The current exchange rate is {currentRate}. Make sure that you choose a rate that is close to the current price.</p>
 
       )}
-    </>
+    </div>
   );
 }
 

@@ -40,7 +40,6 @@ export const getPostsThunk = (searchData) => async (dispatch) => {
 export const getAllOffersThunk = () => async (dispatch) => {
   const data = await fetch(`/api/post/marketOverview`);
   const response = await data.json();
-  console.log(response);
   dispatch(getAllPosts(response));
 }
 
