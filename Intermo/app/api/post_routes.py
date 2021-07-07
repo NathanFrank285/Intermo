@@ -87,6 +87,7 @@ def deletePosts(postId):
   return 'success'
 
 
+# todo, finish the route to edit posts
 @postRoutes.route('/<postId>', methods=['PUT'])
 @login_required
 def putPosts(postId):
