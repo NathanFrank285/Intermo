@@ -67,7 +67,7 @@ def postPosts():
     price=postData['price'],
     quantity=postData['quantity'],
     bidOrOffer=postData['direction'],
-    live=False
+    live=True
   )
   # post = Post.query.filter(Post.userId == id).first()
 
