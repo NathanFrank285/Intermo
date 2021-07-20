@@ -29,7 +29,6 @@ def getTrades():
     tradeDict['name'] = coin.name
     output[count] = tradeDict
     count += 1
-    # print("---------",coin.name)
 
   return output
 
@@ -77,7 +76,6 @@ def newTrade():
     # quoteQuantity = c.convert(
     #     baseQuantity, f'{baseCurrencyName}', f'{quoteCurrencyName}')
     quoteQuantity = price*baseQuantity
-    print('---------------------------I am the quote quant', quoteQuantity)
 
 
     uniqueTradeId = uuid.uuid1()
@@ -146,6 +144,7 @@ def newTrade():
 
       makerBaseBalance.quantity = makerBaseBalance.quantity + baseQuantity
       makerQuoteBalance.quantity = makerQuoteBalance.quantity - quoteQuantity
+      
       #Add trade quantity to the balance of taker
       takerBaseBalance = UserBalance.query.filter(and_(
           UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()
@@ -188,13 +187,3 @@ def newTrade():
 
   except:
     return {'response': 'failed'}
-
-
-
-
-
-
-
-  #todo  create new trades for each user (how to account for both sides relating to eachother, add a unique trade serial key to link offsetting sides with a uuid?), check if the total quantity would put the Posters desired trade value to 0, if so, set the Post.live to False, else leave it true
-
-  # todo have to inverse the direction, for taker of the trade

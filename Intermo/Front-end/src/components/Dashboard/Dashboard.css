@@ -49,6 +49,10 @@
 .loginLink{
 margin-top: auto;
 grid-column: 1/3;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
 }
 
 .loginLink-link{

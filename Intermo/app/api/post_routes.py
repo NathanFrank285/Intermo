@@ -67,7 +67,7 @@ def postPosts():
     price=postData['price'],
     quantity=postData['quantity'],
     bidOrOffer=postData['direction'],
-    live=False
+    live=True
   )
   # post = Post.query.filter(Post.userId == id).first()
 
@@ -87,6 +87,7 @@ def deletePosts(postId):
   return 'success'
 
 
+# todo, finish the route to edit posts
 @postRoutes.route('/<postId>', methods=['PUT'])
 @login_required
 def putPosts(postId):

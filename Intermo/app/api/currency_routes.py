@@ -15,6 +15,8 @@ currencyRoutes = Blueprint('currency', __name__)
 def getCurrency(base, quote):
   id = current_user.id
   rate =  c.convert(1,f'{base}', f'{quote}')
+  
+  # ? keeping the below two lines, for dev purposes, to avoid hitting the database too often
   # rate = c.get_rate('EUR', 'USD')
   # rate = 1.2
   print('I am the current rate--------------', rate)
