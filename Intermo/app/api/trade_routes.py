@@ -144,6 +144,7 @@ def newTrade():
 
       makerBaseBalance.quantity = makerBaseBalance.quantity + baseQuantity
       makerQuoteBalance.quantity = makerQuoteBalance.quantity - quoteQuantity
+      
       #Add trade quantity to the balance of taker
       takerBaseBalance = UserBalance.query.filter(and_(
           UserBalance.userId == takerId, UserBalance.currencyId == baseCurrencyId)).first()

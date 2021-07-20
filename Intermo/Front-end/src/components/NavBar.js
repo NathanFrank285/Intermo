@@ -33,7 +33,15 @@ const NavBar = () => {
           >
             Create an Offer
           </NavLink>
-        ) : null}
+        ) : (
+          <NavLink
+            to="/login"
+            exact={true}
+            className="newPost-button authBubble"
+          >
+            Create an Offer
+          </NavLink>
+        )}
         {/* <NavLink
           to="/viewTheMarket"
           exact={true}
