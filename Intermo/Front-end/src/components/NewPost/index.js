@@ -12,7 +12,6 @@ function NewPost() {
   const dispatch = useDispatch();
   const history = useHistory()
   const pairs = useSelector((state) => state?.pairs[0]);
-  const user = useSelector((state) => state?.session?.user);
   
   const [pair, setPairSearchValue] = useState('1');
   const [quantity, setQuantity] = useState("");
