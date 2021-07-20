@@ -2,8 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
 import ExchangeRates from '../ExchangeRates'
+import SinglePost from "../SinglePost";
 import {newTradeThunk} from '../../store/trades'
 import { store } from "react-notifications-component";
+
 // import { getUserBalanceThunk } from "../../store/userBalance";
 import "./Posts.css";
 
@@ -79,6 +81,7 @@ const submitTrade = async (date, postedCurrencyId, makerDirection, price, quanti
 
     return (
       <div>
+        <SinglePost/>
         <div className="currentRate">
           <ExchangeRates/>
         </div>
